@@ -47,7 +47,8 @@ public sealed class TripService(IApplicationDbContext db) : ITripService
         trip.StartDate = request.StartDate;
         trip.EndDate = request.EndDate;
         trip.Status = request.Status;
-        trip.Currency = string.IsNullOrWhiteSpace(request.Currency) ? trip.Currency : request.Currency.ToUpperInvariant();
+        // USD-only product; manual edits can't change the currency.
+        trip.Currency = "USD";
         trip.UpdatedAt = DateTimeOffset.UtcNow;
 
         // Manual edits send the full itinerary back; replace wholesale.

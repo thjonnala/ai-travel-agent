@@ -38,7 +38,9 @@ public static class ItineraryValidator
     {
         draft.Title = Truncate(draft.Title.Trim(), 200)!;
         draft.Destination = Truncate(draft.Destination.Trim(), 200)!;
-        draft.Currency = string.IsNullOrWhiteSpace(draft.Currency) ? "USD" : draft.Currency.Trim().ToUpperInvariant()[..Math.Min(3, draft.Currency.Trim().Length)];
+        // Product decision: all estimates are presented in US dollars,
+        // regardless of what the model returns.
+        draft.Currency = "USD";
 
         // Re-sequence day numbers so they are always 1..n regardless of model output.
         var dayNumber = 1;

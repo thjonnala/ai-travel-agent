@@ -40,7 +40,8 @@ public class ItineraryValidatorTests
         Assert.Empty(errors);
         Assert.Equal(1, draft.Days[0].DayNumber);
         Assert.Equal(0, draft.Days[0].Items[0].EstimatedCost);
-        Assert.Equal("EUR", draft.Currency);
+        // Currency is always normalized to USD, whatever the model returned.
+        Assert.Equal("USD", draft.Currency);
     }
 
     [Fact]
