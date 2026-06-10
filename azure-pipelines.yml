@@ -117,15 +117,21 @@ stages:
               runtimeStack: 'DOTNETCORE|10.0'
 
           - task: AzureCLI@2
-            displayName: Lock API CORS to the frontend origin
+            displayName: Lock API CORS to the frontend origins
             inputs:
               azureSubscription: $(serviceConnection)
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
                 set -euo pipefail
+                # Default SWA hostname plus any custom domains mapped to it.
+                ORIGINS="https://$(swaHostname)"
+                for DOMAIN in $(az staticwebapp show -n '$(swaName)' -g '$(resourceGroup)' --query "customDomains" -o tsv); do
+                  ORIGINS="$ORIGINS,https://$DOMAIN"
+                done
+                echo "CORS origins: $ORIGINS"
                 az webapp config appsettings set -g '$(resourceGroup)' -n '$(apiAppName)' \
-                  --settings "Cors__AllowedOrigins=https://$(swaHostname)" --output none
+                  --settings "Cors__AllowedOrigins=$ORIGINS" --output none
 
           - bash: |
               set -euo pipefail
