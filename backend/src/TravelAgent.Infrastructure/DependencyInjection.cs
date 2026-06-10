@@ -19,8 +19,9 @@ public static class DependencyInjection
     /// </summary>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("TravelAgentDb")
-            ?? throw new InvalidOperationException("Connection string 'TravelAgentDb' is not configured.");
+        var connectionString = configuration.GetConnectionString("TravelAgentDb");
+        if (string.IsNullOrWhiteSpace(connectionString))
+            throw new InvalidOperationException("Connection string 'TravelAgentDb' is not configured.");
 
         services.AddDbContext<TravelAgentDbContext>(options =>
             options.UseSqlServer(connectionString, sql =>
