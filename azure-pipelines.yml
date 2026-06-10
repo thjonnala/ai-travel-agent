@@ -78,15 +78,17 @@ stages:
             inputs:
               pollingTimeoutSec: '300'
 
-          - bash: |
-              set -euo pipefail
-              npm install -g snyk
-              # Reads obj/project.assets.json produced by the test/build step above.
-              snyk test --all-projects --exclude=frontend,node_modules,dist --severity-threshold=high
-              snyk monitor --all-projects --exclude=frontend,node_modules,dist || true
+          # Extension task: results also appear in the build's "Snyk Report" tab.
+          # Reads obj/project.assets.json produced by the test/build step above.
+          - task: SnykSecurityScan@1
             displayName: Snyk scan backend dependencies
-            env:
-              SNYK_TOKEN: $(snykToken)
+            inputs:
+              serviceConnectionEndpoint: 'snyk-travel-agent'
+              testType: app
+              severityThreshold: high
+              monitorWhen: always
+              failOnIssues: true
+              additionalArguments: '--all-projects --exclude=frontend,node_modules,dist'
 
           - bash: |
               set -euo pipefail
@@ -136,14 +138,15 @@ stages:
               npm run build
             displayName: npm ci + lint + build
 
-          - bash: |
-              set -euo pipefail
-              npm install -g snyk
-              snyk test --file=frontend/package-lock.json --severity-threshold=high
-              snyk monitor --file=frontend/package-lock.json || true
+          - task: SnykSecurityScan@1
             displayName: Snyk scan frontend dependencies
-            env:
-              SNYK_TOKEN: $(snykToken)
+            inputs:
+              serviceConnectionEndpoint: 'snyk-travel-agent'
+              testType: app
+              targetFile: frontend/package-lock.json
+              severityThreshold: high
+              monitorWhen: always
+              failOnIssues: true
 
           - task: SonarCloudAnalyze@3
             displayName: SonarCloud analyze
