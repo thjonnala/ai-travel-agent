@@ -1,9 +1,12 @@
-# App CI/CD: build + test, then deploy API (App Service), DB migrations
-# (EF bundle), and frontend (Static Web App).
+# App CI/CD: build + test + SonarCloud analysis, then deploy API (App Service),
+# DB migrations (EF bundle), and frontend (Static Web App).
 #
 # Infrastructure is provisioned by the smart-ai-travel-agent-infra pipeline;
 # this pipeline discovers resource names from the resource group at runtime so
 # nothing environment-specific is hardcoded.
+#
+# SonarCloud: requires the 'sonarcloud-travel-agent' service connection
+# (SonarCloud token) and the SonarCloud extension installed in the org.
 trigger:
   branches:
     include:
@@ -14,15 +17,17 @@ pool:
 
 variables:
   serviceConnection: 'azure-travel-agent'
+  sonarServiceConnection: 'sonarcloud-travel-agent'
+  sonarOrganization: 'thjonnala'
   resourceGroup: 'rg-travelagent-dev'
   buildConfiguration: 'Release'
 
 stages:
   - stage: Build
-    displayName: Build & test
+    displayName: Build, test & analyze
     jobs:
       - job: Backend
-        displayName: Backend build + tests
+        displayName: Backend build + tests + Sonar
         steps:
           - task: UseDotNet@2
             displayName: Install .NET 10 SDK
@@ -30,8 +35,48 @@ stages:
               packageType: sdk
               version: 10.0.x
 
-          - bash: dotnet test backend/TravelAgent.slnx --configuration $(buildConfiguration) --nologo
-            displayName: dotnet test
+          - task: SonarCloudPrepare@3
+            displayName: SonarCloud prepare (backend)
+            inputs:
+              SonarQube: $(sonarServiceConnection)
+              organization: $(sonarOrganization)
+              scannerMode: dotnet
+              projectKey: $(sonarOrganization)_travelagent-backend
+              projectName: travelagent-backend
+              extraProperties: |
+                sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/TestResults/**/coverage.opencover.xml
+                sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/TestResults/*.trx
+                sonar.exclusions=**/Persistence/Migrations/**
+
+          - bash: |
+              set -euo pipefail
+              dotnet test backend/TravelAgent.slnx \
+                --configuration $(buildConfiguration) --nologo \
+                --logger trx --results-directory $(Agent.TempDirectory)/TestResults \
+                --collect:"XPlat Code Coverage" \
+                -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura
+            displayName: dotnet test with coverage
+
+          - task: PublishTestResults@2
+            displayName: Publish test results
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: VSTest
+              testResultsFiles: '$(Agent.TempDirectory)/TestResults/*.trx'
+              testRunTitle: backend
+
+          - task: PublishCodeCoverageResults@2
+            displayName: Publish coverage to Azure DevOps
+            inputs:
+              summaryFileLocation: '$(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml'
+
+          - task: SonarCloudAnalyze@3
+            displayName: SonarCloud analyze
+
+          - task: SonarCloudPublish@3
+            displayName: SonarCloud publish quality gate
+            inputs:
+              pollingTimeoutSec: '300'
 
           - bash: |
               set -euo pipefail
@@ -58,6 +103,36 @@ stages:
 
           - publish: $(Build.ArtifactStagingDirectory)/drop
             artifact: drop
+
+      - job: Frontend
+        displayName: Frontend lint + build + Sonar
+        steps:
+          - task: SonarCloudPrepare@3
+            displayName: SonarCloud prepare (frontend)
+            inputs:
+              SonarQube: $(sonarServiceConnection)
+              organization: $(sonarOrganization)
+              scannerMode: cli
+              configMode: manual
+              cliProjectKey: $(sonarOrganization)_travelagent-frontend
+              cliProjectName: travelagent-frontend
+              cliSources: frontend/src
+
+          - bash: |
+              set -euo pipefail
+              cd frontend
+              npm ci
+              npm run lint
+              npm run build
+            displayName: npm ci + lint + build
+
+          - task: SonarCloudAnalyze@3
+            displayName: SonarCloud analyze
+
+          - task: SonarCloudPublish@3
+            displayName: SonarCloud publish quality gate
+            inputs:
+              pollingTimeoutSec: '300'
 
   - stage: Deploy
     displayName: Deploy dev
