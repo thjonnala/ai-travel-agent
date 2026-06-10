@@ -13,12 +13,9 @@ namespace TravelAgent.Infrastructure.Identity;
 public sealed class DemoCurrentUserService(TravelAgentDbContext db) : ICurrentUserService
 {
     private const string DemoExternalAuthId = "demo|local-user";
-    private static Guid _cachedUserId;
 
     public async Task<Guid> GetCurrentUserIdAsync(CancellationToken cancellationToken = default)
     {
-        if (_cachedUserId != Guid.Empty) return _cachedUserId;
-
         var user = await db.Users.FirstOrDefaultAsync(u => u.ExternalAuthId == DemoExternalAuthId, cancellationToken);
         if (user is null)
         {
@@ -43,7 +40,6 @@ public sealed class DemoCurrentUserService(TravelAgentDbContext db) : ICurrentUs
             }
         }
 
-        _cachedUserId = user.Id;
         return user.Id;
     }
 }

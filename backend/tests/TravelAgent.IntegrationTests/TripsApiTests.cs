@@ -111,6 +111,53 @@ public class TripsApiTests : IClassFixture<TestWebApplicationFactory>
         Assert.True(luxuryTrip.EstimatedTotalCost > 300);
     }
 
+    [Fact]
+    public async Task Update_replaces_itinerary_recomputes_costs_and_pins_usd()
+    {
+        var planned = await PlanTripAsync("2 days in Valencia");
+
+        var response = await _client.PutAsJsonAsync($"/api/trips/{planned.Id}", new
+        {
+            title = "Valencia, edited",
+            destination = "Valencia, Spain",
+            status = "archived",
+            currency = "EUR", // must be ignored: USD-only product
+            days = new[]
+            {
+                new
+                {
+                    summary = "Edited day",
+                    items = new[]
+                    {
+                        new { timeBlock = "morning", type = "activity", title = "City of Arts", estimatedCost = 30 },
+                        new { timeBlock = "evening", type = "dining", title = "Paella dinner", estimatedCost = 45 },
+                    },
+                },
+            },
+        });
+        response.EnsureSuccessStatusCode();
+        var updated = await response.Content.ReadFromJsonAsync<TripDetail>(Json);
+
+        Assert.Equal("Valencia, edited", updated!.Title);
+        Assert.Single(updated.Days);
+        Assert.Equal(75, updated.EstimatedTotalCost);
+
+        var fetched = await _client.GetFromJsonAsync<JsonElement>($"/api/trips/{planned.Id}");
+        Assert.Equal("USD", fetched.GetProperty("currency").GetString());
+    }
+
+    [Fact]
+    public async Task Allowed_origin_gets_cors_headers()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "/api/trips");
+        request.Headers.Add("Origin", "https://frontend.example.test");
+
+        var response = await _client.SendAsync(request);
+
+        Assert.Equal("https://frontend.example.test",
+            response.Headers.GetValues("Access-Control-Allow-Origin").Single());
+    }
+
     // Minimal response shapes — only what the assertions need.
     private sealed record TripDetail(Guid Id, string Title, decimal EstimatedTotalCost,
         List<Day> Days, List<Message> ChatMessages);

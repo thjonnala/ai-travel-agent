@@ -22,6 +22,8 @@ public sealed class TestWebApplicationFactory : WebApplicationFactory<Program>
         _connection.Open();
 
         builder.UseEnvironment("Development");
+        // Exercise the CORS branch in Program.cs; tests assert the header below.
+        builder.UseSetting("Cors:AllowedOrigins", "https://frontend.example.test");
         builder.ConfigureServices(services =>
         {
             services.RemoveAll(typeof(DbContextOptions<TravelAgentDbContext>));

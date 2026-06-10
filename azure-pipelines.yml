@@ -54,7 +54,7 @@ stages:
                 --configuration $(buildConfiguration) --nologo \
                 --logger trx --results-directory $(Agent.TempDirectory)/TestResults \
                 --collect:"XPlat Code Coverage" \
-                -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura
+                -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.ExcludeByAttribute=GeneratedCodeAttribute
             displayName: dotnet test with coverage
 
           - task: PublishTestResults@2
