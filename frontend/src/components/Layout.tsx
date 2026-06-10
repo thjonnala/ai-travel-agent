@@ -11,8 +11,13 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen flex-col bg-slate-50 text-slate-900">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Link to="/" className="text-lg font-semibold tracking-tight text-sky-700">
-            ✈️ Smart Travel Agent
+          <Link to="/" className="block">
+            <span className="text-lg font-semibold tracking-tight text-sky-700">
+              ✈️ Smart AI Travel Agent
+            </span>
+            <span className="block text-xs text-slate-500">
+              AI-powered planning, human-approved memories.
+            </span>
           </Link>
           <nav aria-label="Main" className="flex gap-1">
             <NavLink to="/" end className={navLinkClass}>

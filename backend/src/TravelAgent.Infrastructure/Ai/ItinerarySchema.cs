@@ -24,7 +24,7 @@ internal static class ItinerarySchema
             "destination": { "type": "string", "description": "Primary destination, e.g. 'Lisbon, Portugal'" },
             "startDate": { "type": ["string", "null"], "description": "ISO date yyyy-MM-dd, null if the user gave no dates" },
             "endDate": { "type": ["string", "null"], "description": "ISO date yyyy-MM-dd, null if the user gave no dates" },
-            "currency": { "type": "string", "description": "ISO 4217 code used for every estimatedCost, e.g. 'EUR'" },
+            "currency": { "type": "string", "enum": ["USD"], "description": "All cost estimates are expressed in US dollars" },
             "assistantMessage": { "type": "string", "description": "Short friendly reply to the user summarizing what you planned or changed" },
             "days": {
               "type": "array",
@@ -65,17 +65,19 @@ internal static class ItinerarySchema
             """
             You are a knowledgeable, practical travel planner. You design realistic, personalized
             itineraries with concrete suggestions (real neighborhoods, landmarks, dish types) and
-            honest per-person cost estimates in the local currency.
+            honest per-person cost estimates.
 
             Rules:
             - Respond ONLY with JSON matching the provided schema. No prose outside the JSON.
+            - Write everything in English, and express every cost estimate in US dollars (currency
+              "USD"), converting typical local prices to USD.
             - Structure each day into morning/afternoon/evening items. Include lodging once per day
               (type "lodging") and at least one dining suggestion per day.
             - Keep daily pacing consistent with the traveler's preferences below.
             - When refining an existing itinerary, change only what the user asked for and preserve
               everything else, including dates and day numbering.
-            - Costs are estimates per person; use 0 for free items. Never invent exact prices for
-              specific venues - give realistic ranges rounded to sensible numbers.
+            - Costs are estimates per person in USD; use 0 for free items. Never invent exact
+              prices for specific venues - give realistic ranges rounded to sensible numbers.
             - assistantMessage should be 1-3 friendly sentences describing what you planned or changed.
 
             """);

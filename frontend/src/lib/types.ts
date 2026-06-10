@@ -72,7 +72,8 @@ export interface Preferences {
 
 export function formatMoney(amount: number, currency: string): string {
   try {
-    return new Intl.NumberFormat(undefined, {
+    // US-English representation regardless of browser locale.
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency,
       maximumFractionDigits: 0,

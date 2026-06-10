@@ -63,7 +63,7 @@ public sealed partial class MockAiPlannerService : IAiPlannerService
             Destination = destination,
             StartDate = context.CurrentItinerary?.StartDate,
             EndDate = context.CurrentItinerary?.EndDate,
-            Currency = context.CurrentItinerary?.Currency ?? "EUR",
+            Currency = "USD",
             AssistantMessage =
                 $"Here's a {dayCount}-day plan for {destination}. " +
                 "(Mock planner: configure AzureOpenAI settings to get real AI itineraries.)",
