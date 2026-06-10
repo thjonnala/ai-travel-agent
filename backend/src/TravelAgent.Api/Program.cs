@@ -18,6 +18,16 @@ builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks();
 
+// Locked-down CORS for the deployed frontend origin(s); not needed in local
+// dev where Vite proxies /api. Setting: Cors__AllowedOrigins (comma-separated).
+var allowedOrigins = (builder.Configuration["Cors:AllowedOrigins"] ?? "")
+    .Split([',', ';'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+if (allowedOrigins.Length > 0)
+{
+    builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+        policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
+}
+
 // AI calls are the expensive resource: cap them per client IP.
 builder.Services.AddRateLimiter(options =>
 {
@@ -45,6 +55,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+if (allowedOrigins.Length > 0) app.UseCors();
 app.UseRateLimiter();
 
 app.MapControllers();

@@ -3,6 +3,10 @@
  * error handling, and 401 redirects live in one place.
  */
 
+// Empty in local dev (Vite proxies /api to the backend); set to the App
+// Service origin in deployed builds.
+const API_BASE: string = import.meta.env.VITE_API_BASE_URL ?? ''
+
 let getAccessToken: (() => Promise<string | null>) | null = null
 
 /** Called once at startup (milestone 2) to plug in MSAL token acquisition. */
@@ -26,7 +30,7 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   const token = getAccessToken ? await getAccessToken() : null
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
-  const response = await fetch(path, { ...init, headers })
+  const response = await fetch(`${API_BASE}${path}`, { ...init, headers })
 
   if (response.status === 401) {
     window.location.assign('/login')

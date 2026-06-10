@@ -1,0 +1,158 @@
+# App CI/CD: build + test, then deploy API (App Service), DB migrations
+# (EF bundle), and frontend (Static Web App).
+#
+# Infrastructure is provisioned by the smart-ai-travel-agent-infra pipeline;
+# this pipeline discovers resource names from the resource group at runtime so
+# nothing environment-specific is hardcoded.
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  serviceConnection: 'azure-travel-agent'
+  resourceGroup: 'rg-travelagent-dev'
+  buildConfiguration: 'Release'
+
+stages:
+  - stage: Build
+    displayName: Build & test
+    jobs:
+      - job: Backend
+        displayName: Backend build + tests
+        steps:
+          - task: UseDotNet@2
+            displayName: Install .NET 10 SDK
+            inputs:
+              packageType: sdk
+              version: 10.0.x
+
+          - bash: dotnet test backend/TravelAgent.slnx --configuration $(buildConfiguration) --nologo
+            displayName: dotnet test
+
+          - bash: |
+              set -euo pipefail
+              dotnet publish backend/src/TravelAgent.Api -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/api
+              dotnet tool restore
+              dotnet ef migrations bundle \
+                --project backend/src/TravelAgent.Infrastructure \
+                --startup-project backend/src/TravelAgent.Api \
+                --configuration $(buildConfiguration) \
+                --self-contained -r linux-x64 \
+                --output $(Build.ArtifactStagingDirectory)/migrations/efbundle
+            displayName: Publish API + build EF migration bundle
+
+          - task: ArchiveFiles@2
+            displayName: Zip API
+            inputs:
+              rootFolderOrFile: $(Build.ArtifactStagingDirectory)/api
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/drop/api.zip
+
+          - bash: cp $(Build.ArtifactStagingDirectory)/migrations/efbundle $(Build.ArtifactStagingDirectory)/drop/efbundle
+            displayName: Stage migration bundle
+
+          - publish: $(Build.ArtifactStagingDirectory)/drop
+            artifact: drop
+
+  - stage: Deploy
+    displayName: Deploy dev
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: Deploy
+        displayName: Migrate DB, deploy API + frontend
+        steps:
+          - checkout: self
+
+          - download: current
+            artifact: drop
+
+          - task: AzureCLI@2
+            displayName: Resolve resource names from resource group
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                set -euo pipefail
+                RG='$(resourceGroup)'
+                API_APP=$(az webapp list -g "$RG" --query "[?starts_with(name, 'app-travelagent-api')].name | [0]" -o tsv)
+                SWA_NAME=$(az staticwebapp list -g "$RG" --query "[0].name" -o tsv)
+                SWA_HOST=$(az staticwebapp show -n "$SWA_NAME" -g "$RG" --query defaultHostname -o tsv)
+                KV_NAME=$(az keyvault list -g "$RG" --query "[0].name" -o tsv)
+                SWA_TOKEN=$(az staticwebapp secrets list -n "$SWA_NAME" -g "$RG" --query properties.apiKey -o tsv)
+                echo "##vso[task.setvariable variable=apiAppName]$API_APP"
+                echo "##vso[task.setvariable variable=apiUrl]https://$API_APP.azurewebsites.net"
+                echo "##vso[task.setvariable variable=swaName]$SWA_NAME"
+                echo "##vso[task.setvariable variable=swaHostname]$SWA_HOST"
+                echo "##vso[task.setvariable variable=keyVaultName]$KV_NAME"
+                echo "##vso[task.setvariable variable=swaDeployToken;issecret=true]$SWA_TOKEN"
+                echo "Resolved: api=$API_APP swa=$SWA_NAME kv=$KV_NAME"
+
+          - task: AzureCLI@2
+            displayName: Run EF Core migrations
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                set -euo pipefail
+                CONN=$(az keyvault secret show --vault-name '$(keyVaultName)' --name TravelAgentDb-ConnectionString --query value -o tsv)
+                chmod +x $(Pipeline.Workspace)/drop/efbundle
+                # Hosted agents run in Azure, covered by the AllowAllWindowsAzureIps firewall rule.
+                $(Pipeline.Workspace)/drop/efbundle --connection "$CONN"
+
+          - task: AzureWebApp@1
+            displayName: Deploy API to App Service
+            inputs:
+              azureSubscription: $(serviceConnection)
+              appType: webAppLinux
+              appName: $(apiAppName)
+              package: $(Pipeline.Workspace)/drop/api.zip
+              runtimeStack: 'DOTNETCORE|10.0'
+
+          - task: AzureCLI@2
+            displayName: Lock API CORS to the frontend origin
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                set -euo pipefail
+                az webapp config appsettings set -g '$(resourceGroup)' -n '$(apiAppName)' \
+                  --settings "Cors__AllowedOrigins=https://$(swaHostname)" --output none
+
+          - bash: |
+              set -euo pipefail
+              cd frontend
+              npm ci
+              VITE_API_BASE_URL='$(apiUrl)' npm run build
+            displayName: Build frontend against deployed API
+
+          - task: AzureStaticWebApp@0
+            displayName: Deploy frontend to Static Web App
+            inputs:
+              app_location: frontend/dist
+              skip_app_build: true
+              skip_api_build: true
+              azure_static_web_apps_api_token: $(swaDeployToken)
+
+          - task: AzureCLI@2
+            displayName: Smoke test deployed API
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                set -euo pipefail
+                for i in $(seq 1 20); do
+                  STATUS=$(curl -s -o /dev/null -w '%{http_code}' "$(apiUrl)/health" || true)
+                  [ "$STATUS" = "200" ] && echo "API healthy" && exit 0
+                  echo "waiting for API ($STATUS)…"; sleep 15
+                done
+                echo "API never became healthy" && exit 1
