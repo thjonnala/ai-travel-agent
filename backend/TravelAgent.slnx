@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TravelAgent.Api/TravelAgent.Api.csproj" />
+    <Project Path="src/TravelAgent.Application/TravelAgent.Application.csproj" />
+    <Project Path="src/TravelAgent.Domain/TravelAgent.Domain.csproj" />
+    <Project Path="src/TravelAgent.Infrastructure/TravelAgent.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/TravelAgent.IntegrationTests/TravelAgent.IntegrationTests.csproj" />
+    <Project Path="tests/TravelAgent.UnitTests/TravelAgent.UnitTests.csproj" />
+  </Folder>
+</Solution>
