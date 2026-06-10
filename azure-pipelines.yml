@@ -80,6 +80,16 @@ stages:
 
           - bash: |
               set -euo pipefail
+              npm install -g snyk
+              # Reads obj/project.assets.json produced by the test/build step above.
+              snyk test --all-projects --exclude=frontend,node_modules,dist --severity-threshold=high
+              snyk monitor --all-projects --exclude=frontend,node_modules,dist || true
+            displayName: Snyk scan backend dependencies
+            env:
+              SNYK_TOKEN: $(snykToken)
+
+          - bash: |
+              set -euo pipefail
               dotnet publish backend/src/TravelAgent.Api -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)/api
               dotnet tool restore
               dotnet ef migrations bundle \
@@ -125,6 +135,15 @@ stages:
               npm run lint
               npm run build
             displayName: npm ci + lint + build
+
+          - bash: |
+              set -euo pipefail
+              npm install -g snyk
+              snyk test --file=frontend/package-lock.json --severity-threshold=high
+              snyk monitor --file=frontend/package-lock.json || true
+            displayName: Snyk scan frontend dependencies
+            env:
+              SNYK_TOKEN: $(snykToken)
 
           - task: SonarCloudAnalyze@3
             displayName: SonarCloud analyze
