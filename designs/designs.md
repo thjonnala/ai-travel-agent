@@ -92,7 +92,7 @@ loop band.
 
 ---
 
-## 10. Travel Agent — Deployment Flow & Network
+## 10. Travel Agent — Deployment Flow & Network (combined)
 
 Two planes in one view: the **CI/CD deployment plane** (git push → pipelines →
 Bicep provisioning, zip deploy, EF migrations, SWA deploy; green steps ①–⑤)
@@ -100,3 +100,27 @@ and the **runtime network** (blue flows Ⓐ–Ⓕ with ports, CORS, firewall, an
 managed-identity notes) across the westus2/eastus2 region split.
 
 [![Travel agent deployment and network](10-travel-agent-azure-deployment-network.png)](10-travel-agent-azure-deployment-network.svg)
+
+---
+
+## 11. Travel Agent — Deployment Flow (CI/CD)
+
+The deployment story on its own, with room for detail: git push → CI triggers →
+both pipelines with their **stages spelled out** (Bicep lint/what-if/deploy;
+build + 51 tests + Sonar/Snyk; migrations → API zip → CORS → SWA → smoke test),
+the service-connection/service-principal identity, and numbered deployment
+actions ①–⑦ into the resource group.
+
+[![Travel agent deployment flow](11-travel-agent-azure-deployment-flow.png)](11-travel-agent-azure-deployment-flow.svg)
+
+---
+
+## 12. Travel Agent — Network Diagram (runtime)
+
+The runtime network on its own: public-internet boundary, DNS/CNAME resolution,
+flows Ⓐ–Ⓕ with ports and protocols (443 everywhere, TDS 1433/TLS to SQL),
+CORS and rate-limit annotations, the westus2/eastus2 split, and a
+**network security posture** panel summarizing TLS, firewall, managed-identity,
+and rate-limiting rules.
+
+[![Travel agent network diagram](12-travel-agent-azure-network.png)](12-travel-agent-azure-network.svg)

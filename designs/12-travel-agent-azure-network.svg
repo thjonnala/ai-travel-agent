@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" font-family="'Segoe UI', 'Segoe UI Variable', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1A1A1A"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#5A6B7B"/>
+    </marker>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3DAEE9"/>
+      <stop offset="1" stop-color="#0F6CBD"/>
+    </linearGradient>
+    <linearGradient id="gSwa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5EA0EF"/>
+      <stop offset="1" stop-color="#2B5797"/>
+    </linearGradient>
+    <g id="icon-browser">
+      <rect width="64" height="48" rx="7" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="2"/>
+      <path d="M0,7 a7,7 0 0 1 7,-7 h50 a7,7 0 0 1 7,7 v7 h-64 z" fill="#0F6CBD"/>
+      <circle cx="9" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="17" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="25" cy="7" r="2.2" fill="#FFFFFF"/>
+      <rect x="8" y="20" width="26" height="9" rx="4.5" fill="#0F6CBD"/>
+      <rect x="22" y="33" width="26" height="9" rx="4.5" fill="#50E6FF"/>
+    </g>
+    <g id="icon-swa">
+      <rect width="56" height="48" rx="8" fill="url(#gSwa)"/>
+      <path d="M30,7 L18,27 h8 l-4,14 L36,21 h-9 z" fill="#FFFFFF"/>
+    </g>
+    <g id="icon-appsvc">
+      <rect width="56" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="26" cy="25" r="13" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>
+      <ellipse cx="26" cy="25" rx="5.5" ry="13" fill="none" stroke="#FFFFFF" stroke-width="1.8"/>
+      <line x1="13" y1="25" x2="39" y2="25" stroke="#FFFFFF" stroke-width="1.8"/>
+      <circle cx="43" cy="13" r="6.5" fill="#50E6FF"/>
+      <circle cx="43" cy="13" r="2.4" fill="#0F6CBD"/>
+    </g>
+    <g id="icon-kv">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="20" cy="22" r="8" fill="none" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="27" y1="22" x2="42" y2="22" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="36" y1="22" x2="36" y2="30" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="42" y1="22" x2="42" y2="28" stroke="#FFFFFF" stroke-width="3.5"/>
+    </g>
+    <g id="icon-aoai">
+      <polygon points="26,0 13,22.5 -13,22.5 -26,0 -13,-22.5 13,-22.5" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="4" fill="#0F6CBD"/>
+      <circle cx="0" cy="-13" r="3" fill="#3DAEE9"/>
+      <circle cx="11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <circle cx="-11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <line x1="0" y1="-13" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="-11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+    </g>
+    <g id="icon-sql">
+      <path d="M0,9 v34 a26,9 0 0 0 52,0 v-34 z" fill="url(#gBlue)"/>
+      <ellipse cx="26" cy="9" rx="26" ry="9" fill="#50E6FF"/>
+      <text x="26" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">SQL</text>
+    </g>
+    <g id="icon-insights">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="26" cy="19" r="9" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+      <rect x="21" y="28" width="10" height="5" rx="2" fill="#FFFFFF"/>
+      <rect x="22.5" y="35" width="7" height="3.5" rx="1.75" fill="#FFFFFF"/>
+      <polyline points="20,20 24,16 28,20 32,14" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    </g>
+    <g id="icon-dns">
+      <circle cx="24" cy="24" r="22" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="2.4"/>
+      <ellipse cx="24" cy="24" rx="9.5" ry="22" fill="none" stroke="#0F6CBD" stroke-width="1.8"/>
+      <line x1="2" y1="24" x2="46" y2="24" stroke="#0F6CBD" stroke-width="1.8"/>
+      <line x1="5" y1="13" x2="43" y2="13" stroke="#0F6CBD" stroke-width="1.4"/>
+      <line x1="5" y1="35" x2="43" y2="35" stroke="#0F6CBD" stroke-width="1.4"/>
+    </g>
+    <g id="icon-lock">
+      <rect x="0" y="8" width="18" height="13" rx="3" fill="#0F6CBD"/>
+      <path d="M4,8 v-2 a5,5 0 0 1 10,0 v2" fill="none" stroke="#0F6CBD" stroke-width="2.6"/>
+    </g>
+  </defs>
+
+  <rect width="1800" height="1000" fill="#FFFFFF"/>
+  <text x="900" y="42" text-anchor="middle" font-size="25" font-weight="700" fill="#243A5E">Smart AI Travel Agent — Azure network diagram (runtime traffic)</text>
+
+  <!-- ===================== Public internet zone ===================== -->
+  <rect x="60" y="90" width="380" height="640" rx="14" fill="none" stroke="#B9C4CE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="86" y="120" font-size="16" font-weight="700" fill="#5A6B7B">Public internet</text>
+
+  <g>
+    <circle cx="160" cy="190" r="15" fill="#0078D4"/>
+    <rect x="136" y="210" width="48" height="30" rx="15" fill="#0078D4"/>
+    <text x="160" y="262" text-anchor="middle" font-size="15" fill="#243A5E">Traveler</text>
+  </g>
+  <line x1="160" y1="275" x2="160" y2="330" stroke="#243A5E" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+
+  <use href="#icon-browser" x="128" y="338"/>
+  <text x="160" y="410" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Web browser</text>
+  <text x="160" y="428" text-anchor="middle" font-size="12" fill="#5A6B7B">React SPA (HTTPS only)</text>
+
+  <use href="#icon-dns" x="300" y="490"/>
+  <text x="324" y="562" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">DNS</text>
+  <text x="324" y="580" text-anchor="middle" font-size="12" fill="#5A6B7B">aitravelagent.thiruapps.com</text>
+  <text x="324" y="596" text-anchor="middle" font-size="12" fill="#5A6B7B">CNAME → SWA default host</text>
+
+  <line x1="178" y1="392" x2="298" y2="500" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===================== Azure subscription ===================== -->
+  <rect x="480" y="90" width="1260" height="800" rx="18" fill="none" stroke="#7FCDEE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="505" y="122" font-size="16" font-weight="700" fill="#243A5E">Azure subscription — resource group rg-travelagent-dev</text>
+
+  <!-- westus2 band -->
+  <rect x="520" y="150" width="1180" height="290" rx="12" fill="none" stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text x="545" y="178" font-size="14" font-weight="600" fill="#5A6B7B">region: westus2</text>
+
+  <use href="#icon-appsvc" x="842" y="220"/>
+  <text x="870" y="292" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">App Service (Linux F1)</text>
+  <text x="870" y="310" text-anchor="middle" font-size="12" fill="#5A6B7B">HTTPS only · TLS ≥ 1.2 · FTPS disabled</text>
+  <text x="870" y="326" text-anchor="middle" font-size="12" fill="#5A6B7B">system-assigned managed identity</text>
+
+  <use href="#icon-sql" x="1414" y="220"/>
+  <text x="1440" y="296" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Azure SQL serverless</text>
+  <text x="1440" y="314" text-anchor="middle" font-size="12" fill="#5A6B7B">public access, firewall-restricted:</text>
+  <text x="1440" y="330" text-anchor="middle" font-size="12" fill="#5A6B7B">Azure services + dev workstation IP</text>
+
+  <!-- C -->
+  <line x1="905" y1="244" x2="1405" y2="244" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <use href="#icon-lock" x="1090" y="216" transform="scale(0.9)"/>
+  <text x="1155" y="230" text-anchor="middle" font-size="13" fill="#243A5E">TDS 1433 / TLS</text>
+  <g transform="translate(1155,262)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">C</text></g>
+
+  <!-- eastus2 band -->
+  <rect x="520" y="480" width="1180" height="380" rx="12" fill="none" stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text x="545" y="508" font-size="14" font-weight="600" fill="#5A6B7B">region: eastus2</text>
+
+  <use href="#icon-swa" x="612" y="560"/>
+  <text x="640" y="632" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Static Web Apps</text>
+  <text x="640" y="650" text-anchor="middle" font-size="12" fill="#5A6B7B">custom domain + managed TLS</text>
+  <text x="640" y="666" text-anchor="middle" font-size="12" fill="#5A6B7B">SPA navigation fallback</text>
+
+  <use href="#icon-kv" x="954" y="560"/>
+  <text x="980" y="632" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Key Vault</text>
+  <text x="980" y="650" text-anchor="middle" font-size="12" fill="#5A6B7B">RBAC: Key Vault Secrets User</text>
+  <text x="980" y="666" text-anchor="middle" font-size="12" fill="#5A6B7B">(API's managed identity only)</text>
+
+  <use href="#icon-aoai" x="1260" y="584"/>
+  <text x="1260" y="632" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Azure OpenAI</text>
+  <text x="1260" y="650" text-anchor="middle" font-size="12" fill="#5A6B7B">gpt-4o 'planner' · API key</text>
+  <text x="1260" y="666" text-anchor="middle" font-size="12" fill="#5A6B7B">stored in Key Vault</text>
+
+  <use href="#icon-insights" x="1504" y="560"/>
+  <text x="1530" y="632" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">App Insights</text>
+  <text x="1530" y="650" text-anchor="middle" font-size="12" fill="#5A6B7B">+ Log Analytics</text>
+
+  <!-- A: browser -> DNS -> SWA -->
+  <line x1="352" y1="514" x2="604" y2="580" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="470" y="528" text-anchor="middle" font-size="13" fill="#243A5E">HTTPS 443</text>
+  <text x="470" y="545" text-anchor="middle" font-size="12" fill="#5A6B7B">static assets</text>
+  <g transform="translate(470,572)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">A</text></g>
+
+  <!-- B: browser -> App Service -->
+  <line x1="195" y1="362" x2="836" y2="252" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <g transform="translate(490,300)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">B</text></g>
+  <text x="512" y="290" font-size="13" fill="#243A5E">HTTPS 443 — REST/JSON</text>
+  <text x="512" y="308" font-size="12" fill="#5A6B7B">CORS allowlist: SWA + custom domain</text>
+  <text x="512" y="324" font-size="12" fill="#5A6B7B">rate limit: 10 AI calls/min/IP</text>
+
+  <!-- D: App Service -> Key Vault -->
+  <line x1="880" y1="272" x2="976" y2="556" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <g transform="translate(908,420)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">D</text></g>
+  <text x="800" y="450" font-size="12.5" fill="#243A5E">443 · Key Vault references</text>
+  <text x="800" y="468" font-size="12" fill="#5A6B7B">managed identity (no keys in config)</text>
+
+  <!-- E: App Service -> OpenAI -->
+  <line x1="900" y1="268" x2="1252" y2="560" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <g transform="translate(1090,420)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">E</text></g>
+  <text x="1110" y="415" font-size="12.5" fill="#243A5E">443 · chat completions</text>
+  <text x="1110" y="433" font-size="12" fill="#5A6B7B">structured outputs (JSON schema)</text>
+
+  <!-- F: App Service -> App Insights -->
+  <line x1="912" y1="258" x2="1500" y2="562" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="3 4" marker-end="url(#arrowGray)"/>
+  <g transform="translate(1320,475)"><circle r="12" fill="#0F6CBD" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">F</text></g>
+  <text x="1340" y="485" font-size="12.5" fill="#5A6B7B">telemetry (443)</text>
+
+  <!-- ===================== Security notes ===================== -->
+  <rect x="60" y="760" width="380" height="228" rx="14" fill="#EAF6FD" stroke="#9AD2F0" stroke-width="1.4"/>
+  <text x="86" y="790" font-size="15" font-weight="700" fill="#243A5E">Network security posture</text>
+  <text x="86" y="818" font-size="12.5" fill="#243A5E">• All public endpoints HTTPS-only, TLS ≥ 1.2</text>
+  <text x="86" y="840" font-size="12.5" fill="#243A5E">• API CORS locked to known frontend origins</text>
+  <text x="86" y="862" font-size="12.5" fill="#243A5E">• SQL firewall: Azure services + one dev IP</text>
+  <text x="86" y="884" font-size="12.5" fill="#243A5E">• Secrets only in Key Vault, read via</text>
+  <text x="98" y="902" font-size="12.5" fill="#243A5E">managed identity (RBAC, least privilege)</text>
+  <text x="86" y="924" font-size="12.5" fill="#243A5E">• No inbound ports on SQL/KV/OpenAI besides</text>
+  <text x="98" y="942" font-size="12.5" fill="#243A5E">Azure-fronted 443/1433 service endpoints</text>
+  <text x="86" y="964" font-size="12.5" fill="#243A5E">• AI endpoint rate-limited per client IP</text>
+
+  <!-- legend -->
+  <rect x="1400" y="908" width="340" height="62" rx="10" fill="#FFFFFF" stroke="#9AD2F0" stroke-width="1.4"/>
+  <line x1="1416" y1="930" x2="1466" y2="930" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1476" y="934" font-size="12.5" fill="#243A5E">network traffic (port labeled)</text>
+  <line x1="1416" y1="954" x2="1466" y2="954" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="3 4" marker-end="url(#arrowGray)"/>
+  <text x="1476" y="958" font-size="12.5" fill="#243A5E">telemetry</text>
+
+  <!-- Microsoft Azure logo -->
+  <g transform="translate(420,0)">
+    <path d="M60,975 L85,926 L110,975 L97,975 L85,951 L73,975 Z" fill="#0078D4"/>
+    <path d="M85,926 L110,975 L97,975 L85,951 Z" fill="#3DAEE9"/>
+    <text x="124" y="968" font-size="20" fill="#243A5E">Microsoft <tspan font-weight="700">Azure</tspan></text>
+  </g>
+</svg>

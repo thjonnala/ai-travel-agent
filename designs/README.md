@@ -15,11 +15,13 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 7 | Call-center analytics pipeline — Azure icon-style flow (hand-crafted SVG, not Mermaid) | [svg = source](07-call-center-analytics-pipeline.svg) | [svg](07-call-center-analytics-pipeline.svg) | [png](07-call-center-analytics-pipeline.png) |
 | 8 | Travel agent Azure flow — this project in the same Azure icon style | [svg = source](08-travel-agent-azure-flow.svg) | [svg](08-travel-agent-azure-flow.svg) | [png](08-travel-agent-azure-flow.png) |
 | 9 | Travel agent Azure sequence flow — lifelines + numbered messages, Azure icon style | [svg = source](09-travel-agent-azure-sequence.svg) | [svg](09-travel-agent-azure-sequence.svg) | [png](09-travel-agent-azure-sequence.png) |
-| 10 | Travel agent Azure deployment flow + network — CI/CD plane, regions, ports, firewall/identity notes | [svg = source](10-travel-agent-azure-deployment-network.svg) | [svg](10-travel-agent-azure-deployment-network.svg) | [png](10-travel-agent-azure-deployment-network.png) |
+| 10 | Travel agent Azure deployment flow + network — combined view | [svg = source](10-travel-agent-azure-deployment-network.svg) | [svg](10-travel-agent-azure-deployment-network.svg) | [png](10-travel-agent-azure-deployment-network.png) |
+| 11 | Travel agent Azure deployment flow — CI/CD only, with pipeline stages | [svg = source](11-travel-agent-azure-deployment-flow.svg) | [svg](11-travel-agent-azure-deployment-flow.svg) | [png](11-travel-agent-azure-deployment-flow.png) |
+| 12 | Travel agent Azure network diagram — runtime traffic, ports, security posture | [svg = source](12-travel-agent-azure-network.svg) | [svg](12-travel-agent-azure-network.svg) | [png](12-travel-agent-azure-network.png) |
 
 See **[designs.md](designs.md)** for a visual gallery of all diagrams.
 
-Diagrams 7–10 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
+Diagrams 7–12 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
 edit the SVG itself and re-render the PNG by screenshotting it in a browser, e.g.:
 
 ```powershell

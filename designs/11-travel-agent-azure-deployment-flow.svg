@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" font-family="'Segoe UI', 'Segoe UI Variable', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1A1A1A"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#8661C5"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#5A6B7B"/>
+    </marker>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3DAEE9"/>
+      <stop offset="1" stop-color="#0F6CBD"/>
+    </linearGradient>
+    <linearGradient id="gSwa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5EA0EF"/>
+      <stop offset="1" stop-color="#2B5797"/>
+    </linearGradient>
+    <g id="icon-swa">
+      <rect width="56" height="48" rx="8" fill="url(#gSwa)"/>
+      <path d="M30,7 L18,27 h8 l-4,14 L36,21 h-9 z" fill="#FFFFFF"/>
+    </g>
+    <g id="icon-appsvc">
+      <rect width="56" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="26" cy="25" r="13" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>
+      <ellipse cx="26" cy="25" rx="5.5" ry="13" fill="none" stroke="#FFFFFF" stroke-width="1.8"/>
+      <line x1="13" y1="25" x2="39" y2="25" stroke="#FFFFFF" stroke-width="1.8"/>
+      <circle cx="43" cy="13" r="6.5" fill="#50E6FF"/>
+      <circle cx="43" cy="13" r="2.4" fill="#0F6CBD"/>
+    </g>
+    <g id="icon-kv">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="20" cy="22" r="8" fill="none" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="27" y1="22" x2="42" y2="22" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="36" y1="22" x2="36" y2="30" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="42" y1="22" x2="42" y2="28" stroke="#FFFFFF" stroke-width="3.5"/>
+    </g>
+    <g id="icon-sql">
+      <path d="M0,9 v34 a26,9 0 0 0 52,0 v-34 z" fill="url(#gBlue)"/>
+      <ellipse cx="26" cy="9" rx="26" ry="9" fill="#50E6FF"/>
+      <text x="26" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">SQL</text>
+    </g>
+    <g id="icon-insights">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="26" cy="19" r="9" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+      <rect x="21" y="28" width="10" height="5" rx="2" fill="#FFFFFF"/>
+      <rect x="22.5" y="35" width="7" height="3.5" rx="1.75" fill="#FFFFFF"/>
+      <polyline points="20,20 24,16 28,20 32,14" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+    </g>
+    <g id="icon-repos">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="17" cy="13" r="5" fill="#FFFFFF"/>
+      <circle cx="17" cy="35" r="5" fill="#FFFFFF"/>
+      <circle cx="36" cy="24" r="5" fill="#FFFFFF"/>
+      <line x1="17" y1="18" x2="17" y2="30" stroke="#FFFFFF" stroke-width="3"/>
+      <path d="M17,30 Q17,24 31,24" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+    </g>
+    <g id="icon-pipeline">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <path d="M14,14 L26,24 L14,34 z" fill="#FFFFFF"/>
+      <path d="M28,14 L40,24 L28,34 z" fill="#50E6FF"/>
+    </g>
+  </defs>
+
+  <rect width="1800" height="1000" fill="#FFFFFF"/>
+  <text x="900" y="42" text-anchor="middle" font-size="25" font-weight="700" fill="#243A5E">Smart AI Travel Agent — Azure deployment flow (CI/CD)</text>
+
+  <!-- ===================== Source ===================== -->
+  <g>
+    <circle cx="130" cy="250" r="15" fill="#0078D4"/>
+    <rect x="106" y="270" width="48" height="30" rx="15" fill="#0078D4"/>
+    <text x="130" y="322" text-anchor="middle" font-size="15" fill="#243A5E">Developer</text>
+  </g>
+  <line x1="168" y1="270" x2="278" y2="270" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="222" y="254" text-anchor="middle" font-size="13.5" fill="#243A5E">git push</text>
+  <g transform="translate(222,288)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">1</text></g>
+
+  <use href="#icon-repos" x="284" y="246"/>
+  <text x="310" y="318" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Azure Repos</text>
+  <text x="310" y="336" text-anchor="middle" font-size="12" fill="#5A6B7B">main branch</text>
+
+  <!-- CI triggers -->
+  <path d="M342,260 h60 v-90 h70" fill="none" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <text x="408" y="155" text-anchor="middle" font-size="12.5" fill="#5B3FA8">trigger:</text>
+  <text x="408" y="172" text-anchor="middle" font-size="12.5" fill="#5B3FA8">bicep/* changes</text>
+  <path d="M342,282 h60 v330 h70" fill="none" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <text x="408" y="582" text-anchor="middle" font-size="12.5" fill="#5B3FA8">trigger:</text>
+  <text x="408" y="599" text-anchor="middle" font-size="12.5" fill="#5B3FA8">every push</text>
+
+  <!-- ===================== Infra pipeline ===================== -->
+  <rect x="480" y="80" width="600" height="280" rx="14" fill="none" stroke="#C4B0E8" stroke-width="2" stroke-dasharray="9 7"/>
+  <use href="#icon-pipeline" x="504" y="100"/>
+  <text x="570" y="122" font-size="16" font-weight="700" fill="#5B3FA8">Infra pipeline — smart-ai-travel-agent-infra (id 3)</text>
+  <text x="570" y="142" font-size="12.5" fill="#5A6B7B">Bicep, subscription-scoped, idempotent</text>
+
+  <rect x="510" y="170" width="250" height="150" rx="10" fill="#F7F4FC" stroke="#C4B0E8" stroke-width="1.4"/>
+  <text x="635" y="198" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Stage: Validate</text>
+  <text x="635" y="226" text-anchor="middle" font-size="12.5" fill="#5A6B7B">az bicep build (lint)</text>
+  <text x="635" y="244" text-anchor="middle" font-size="12.5" fill="#5A6B7B">az deployment sub what-if</text>
+  <text x="635" y="262" text-anchor="middle" font-size="12.5" fill="#5A6B7B">SQL pwd from secret variable</text>
+
+  <line x1="763" y1="245" x2="797" y2="245" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="800" y="170" width="250" height="150" rx="10" fill="#F7F4FC" stroke="#C4B0E8" stroke-width="1.4"/>
+  <text x="925" y="198" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Stage: Deploy dev</text>
+  <text x="925" y="226" text-anchor="middle" font-size="12.5" fill="#5A6B7B">environment 'dev'</text>
+  <text x="925" y="244" text-anchor="middle" font-size="12.5" fill="#5A6B7B">az deployment sub create</text>
+  <text x="925" y="262" text-anchor="middle" font-size="12.5" fill="#5A6B7B">creates / updates every resource</text>
+
+  <!-- ===================== App pipeline ===================== -->
+  <rect x="480" y="450" width="600" height="430" rx="14" fill="none" stroke="#C4B0E8" stroke-width="2" stroke-dasharray="9 7"/>
+  <use href="#icon-pipeline" x="504" y="470"/>
+  <text x="570" y="492" font-size="16" font-weight="700" fill="#5B3FA8">App pipeline — smart-ai-travel-agent-app (id 4)</text>
+  <text x="570" y="512" font-size="12.5" fill="#5A6B7B">resource names resolved from the resource group at runtime</text>
+
+  <rect x="510" y="540" width="250" height="200" rx="10" fill="#F7F4FC" stroke="#C4B0E8" stroke-width="1.4"/>
+  <text x="635" y="568" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Stage: Build &amp; test</text>
+  <text x="635" y="596" text-anchor="middle" font-size="12.5" fill="#5A6B7B">dotnet test — 51 tests, coverage</text>
+  <text x="635" y="614" text-anchor="middle" font-size="12.5" fill="#5A6B7B">SonarCloud + Snyk scans</text>
+  <text x="635" y="632" text-anchor="middle" font-size="12.5" fill="#5A6B7B">publish API + EF migration bundle</text>
+  <text x="635" y="650" text-anchor="middle" font-size="12.5" fill="#5A6B7B">npm lint + Vite build</text>
+  <g transform="translate(522,552)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">3</text></g>
+
+  <line x1="763" y1="640" x2="797" y2="640" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="800" y="540" width="250" height="200" rx="10" fill="#F7F4FC" stroke="#C4B0E8" stroke-width="1.4"/>
+  <text x="925" y="568" text-anchor="middle" font-size="14.5" font-weight="600" fill="#243A5E">Stage: Deploy dev</text>
+  <text x="925" y="596" text-anchor="middle" font-size="12.5" fill="#5A6B7B">EF migrations → API zip →</text>
+  <text x="925" y="614" text-anchor="middle" font-size="12.5" fill="#5A6B7B">CORS app-setting → frontend</text>
+  <text x="925" y="632" text-anchor="middle" font-size="12.5" fill="#5A6B7B">build (VITE_API_BASE_URL) →</text>
+  <text x="925" y="650" text-anchor="middle" font-size="12.5" fill="#5A6B7B">SWA deploy → /health smoke test</text>
+
+  <!-- service connection note -->
+  <rect x="510" y="770" width="540" height="84" rx="10" fill="#EAF6FD" stroke="#9AD2F0" stroke-width="1.4"/>
+  <text x="780" y="798" text-anchor="middle" font-size="13" font-weight="600" fill="#243A5E">Service connection: azure-travel-agent</text>
+  <text x="780" y="818" text-anchor="middle" font-size="12" fill="#5A6B7B">service principal sp-smart-ai-travel-agent-ado</text>
+  <text x="780" y="836" text-anchor="middle" font-size="12" fill="#5A6B7B">Contributor + RBAC Administrator + Key Vault Secrets User</text>
+
+  <!-- ===================== Azure targets ===================== -->
+  <rect x="1160" y="80" width="580" height="800" rx="18" fill="none" stroke="#7FCDEE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="1185" y="112" font-size="16" font-weight="700" fill="#243A5E">Azure subscription — rg-travelagent-dev</text>
+
+  <use href="#icon-kv" x="1254" y="170"/>
+  <text x="1280" y="242" text-anchor="middle" font-size="14" font-weight="600" fill="#243A5E">Key Vault</text>
+  <text x="1280" y="260" text-anchor="middle" font-size="12" fill="#5A6B7B">secrets written by Bicep</text>
+
+  <use href="#icon-insights" x="1534" y="170"/>
+  <text x="1560" y="242" text-anchor="middle" font-size="14" font-weight="600" fill="#243A5E">App Insights</text>
+  <text x="1560" y="260" text-anchor="middle" font-size="12" fill="#5A6B7B">+ OpenAI · monitoring</text>
+
+  <use href="#icon-appsvc" x="1252" y="400"/>
+  <text x="1280" y="472" text-anchor="middle" font-size="14" font-weight="600" fill="#243A5E">App Service</text>
+  <text x="1280" y="490" text-anchor="middle" font-size="12" fill="#5A6B7B">.NET 10 API (westus2)</text>
+
+  <use href="#icon-sql" x="1534" y="400"/>
+  <text x="1560" y="476" text-anchor="middle" font-size="14" font-weight="600" fill="#243A5E">Azure SQL</text>
+  <text x="1560" y="494" text-anchor="middle" font-size="12" fill="#5A6B7B">sqldb-travelagent (westus2)</text>
+
+  <use href="#icon-swa" x="1254" y="640"/>
+  <text x="1280" y="712" text-anchor="middle" font-size="14" font-weight="600" fill="#243A5E">Static Web Apps</text>
+  <text x="1280" y="730" text-anchor="middle" font-size="12" fill="#5A6B7B">frontend (eastus2)</text>
+
+  <!-- deployment arrows -->
+  <line x1="1053" y1="220" x2="1156" y2="200" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <g transform="translate(1105,186)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">2</text></g>
+  <text x="1105" y="232" text-anchor="middle" font-size="12" fill="#5B3FA8">provisions all</text>
+  <text x="1105" y="248" text-anchor="middle" font-size="12" fill="#5B3FA8">resources</text>
+
+  <line x1="1053" y1="600" x2="1530" y2="438" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <g transform="translate(1180,562)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">4</text></g>
+  <text x="1200" y="572" font-size="12" fill="#5B3FA8">EF migration bundle (TDS 1433)</text>
+
+  <line x1="1053" y1="630" x2="1248" y2="450" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <g transform="translate(1120,540)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">5</text></g>
+  <text x="1108" y="520" font-size="12" fill="#5B3FA8">zip deploy (Kudu HTTPS)</text>
+
+  <line x1="1053" y1="680" x2="1250" y2="676" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <g transform="translate(1120,696)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">6</text></g>
+  <text x="1145" y="700" font-size="12" fill="#5B3FA8">SWA deploy (token)</text>
+
+  <path d="M1053,710 q120,130 200,-212" fill="none" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="3 4" marker-end="url(#arrowGray)"/>
+  <g transform="translate(1185,760)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">7</text></g>
+  <text x="1205" y="770" font-size="12" fill="#5A6B7B">verify GET /health = 200 (smoke test)</text>
+
+  <!-- legend -->
+  <rect x="60" y="908" width="420" height="80" rx="10" fill="#FFFFFF" stroke="#9AD2F0" stroke-width="1.4"/>
+  <line x1="76" y1="930" x2="126" y2="930" stroke="#8661C5" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrowPurple)"/>
+  <text x="136" y="934" font-size="12.5" fill="#243A5E">deployment action (pipeline → Azure)</text>
+  <line x1="76" y1="954" x2="126" y2="954" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="136" y="958" font-size="12.5" fill="#243A5E">stage progression</text>
+  <line x1="76" y1="976" x2="126" y2="976" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="3 4" marker-end="url(#arrowGray)"/>
+  <text x="136" y="980" font-size="12.5" fill="#243A5E">verification</text>
+
+  <!-- Microsoft Azure logo -->
+  <g transform="translate(1530,0)">
+    <path d="M60,975 L85,926 L110,975 L97,975 L85,951 L73,975 Z" fill="#0078D4"/>
+    <path d="M85,926 L110,975 L97,975 L85,951 Z" fill="#3DAEE9"/>
+    <text x="124" y="968" font-size="20" fill="#243A5E">Microsoft <tspan font-weight="700">Azure</tspan></text>
+  </g>
+</svg>
