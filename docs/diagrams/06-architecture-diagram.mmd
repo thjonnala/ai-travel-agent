@@ -1,0 +1,55 @@
+---
+title: Smart AI Travel Agent — High-Level Architecture
+config:
+  theme: neutral
+  flowchart:
+    curve: basis
+---
+flowchart LR
+    Traveler(["👤 Traveler"])
+
+    subgraph ClientTier["Client tier"]
+        SPA["React 19 SPA\nVite · TypeScript · Tailwind\nTanStack Query · React Router\n— chat planner UI, trip dashboard,\npreferences, cost breakdown"]
+    end
+
+    subgraph EdgeTier["Presentation / edge"]
+        SWA["Azure Static Web Apps\naitravelagent.thiruapps.com\nstatic hosting + SPA fallback"]
+    end
+
+    subgraph ApiTier["API tier — ASP.NET Core (.NET 10), clean architecture"]
+        direction TB
+        Api["Api layer\ncontrollers · CORS · rate limiting ('ai': 10/min/IP)\nProblemDetails · OpenAPI/Swagger (dev)"]
+        App["Application layer\nTripPlanningService · TripService · PreferenceService\nItineraryValidator (schema + USD normalization)\nports: IAiPlannerService · ICurrentUserService · IApplicationDbContext"]
+        Infra["Infrastructure layer\nEF Core 10 DbContext · planner adapters\ndemo identity (Entra ID later)"]
+        Api --> App --> Infra
+    end
+
+    subgraph AiLayer["AI layer (provider-swappable)"]
+        direction TB
+        Planner["AzureOpenAiPlannerService\nstrict JSON-schema structured outputs\nconversation memory (last 12 turns)\nre-prompt once on invalid output"]
+        Mock["MockAiPlannerService\ndeterministic keyless fallback\n(auto-selected when no AI config)"]
+    end
+
+    subgraph DataTier["Data tier"]
+        DB[("Azure SQL serverless\ntrips · itinerary days/items\nchat history · preferences\ncode-first EF migrations")]
+    end
+
+    AOAI["Azure OpenAI\ngpt-4o deployment 'planner'"]
+
+    subgraph CrossCutting["Cross-cutting"]
+        KV["Azure Key Vault\nSQL conn string · OpenAI key\n(managed identity, no secrets in code)"]
+        Insights["Application Insights\nlogs · telemetry"]
+        ADO["Azure DevOps CI/CD\ninfra: Bicep lint→what-if→deploy\napp: tests+coverage → Sonar/Snyk →\nEF migrations → API + SPA deploy"]
+    end
+
+    Traveler -- "uses" --> SPA
+    SPA -- "served from\nHTTPS" --- SWA
+    SPA -- "REST/JSON · HTTPS\nCORS locked to frontend origins" --> Api
+    Infra -- "selects adapter\nat startup" --> AiLayer
+    Planner -- "chat completions\nHTTPS" --> AOAI
+    Infra -- "LINQ / TDS 1433 TLS\nuser-scoped queries (no IDOR)" --> DB
+    ApiTier -. "secrets via\nKey Vault references" .-> KV
+    ApiTier -. "telemetry" .-> Insights
+    ADO -. "provisions + deploys" .-> EdgeTier
+    ADO -. "provisions + deploys" .-> ApiTier
+    ADO -. "applies migrations" .-> DB

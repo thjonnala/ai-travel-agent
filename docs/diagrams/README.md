@@ -11,6 +11,7 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 3 | Deployment — Azure nodes, regions, connections | [mmd](03-deployment-diagram.mmd) | [svg](03-deployment-diagram.svg) | [png](03-deployment-diagram.png) |
 | 4 | Class — entities, services, interfaces | [mmd](04-class-diagram.mmd) | [svg](04-class-diagram.svg) | [png](04-class-diagram.png) |
 | 5 | Entity-Relationship — tables, keys, cardinality | [mmd](05-er-diagram.mmd) | [svg](05-er-diagram.svg) | [png](05-er-diagram.png) |
+| 6 | Architecture — high-level tiers, AI layer, cross-cutting | [mmd](06-architecture-diagram.mmd) | [svg](06-architecture-diagram.svg) | [png](06-architecture-diagram.png) |
 
 ## Editing & regenerating
 
