@@ -15,8 +15,11 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 7 | Call-center analytics pipeline — Azure icon-style flow (hand-crafted SVG, not Mermaid) | [svg = source](07-call-center-analytics-pipeline.svg) | [svg](07-call-center-analytics-pipeline.svg) | [png](07-call-center-analytics-pipeline.png) |
 | 8 | Travel agent Azure flow — this project in the same Azure icon style | [svg = source](08-travel-agent-azure-flow.svg) | [svg](08-travel-agent-azure-flow.svg) | [png](08-travel-agent-azure-flow.png) |
 | 9 | Travel agent Azure sequence flow — lifelines + numbered messages, Azure icon style | [svg = source](09-travel-agent-azure-sequence.svg) | [svg](09-travel-agent-azure-sequence.svg) | [png](09-travel-agent-azure-sequence.png) |
+| 10 | Travel agent Azure deployment flow + network — CI/CD plane, regions, ports, firewall/identity notes | [svg = source](10-travel-agent-azure-deployment-network.svg) | [svg](10-travel-agent-azure-deployment-network.svg) | [png](10-travel-agent-azure-deployment-network.png) |
 
-Diagrams 7–9 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
+See **[designs.md](designs.md)** for a visual gallery of all diagrams.
+
+Diagrams 7–10 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
 edit the SVG itself and re-render the PNG by screenshotting it in a browser, e.g.:
 
 ```powershell
@@ -29,7 +32,7 @@ Edit the `.mmd` files (plain Mermaid — also renders inline on GitHub/Azure
 DevOps and at [mermaid.live](https://mermaid.live)), then re-render:
 
 ```powershell
-cd docs/diagrams
+cd designs
 # puppeteer-config.json points at a locally installed Chrome
 npx -y -p @mermaid-js/mermaid-cli mmdc -p puppeteer-config.json -i <name>.mmd -o <name>.svg -b white
 npx -y -p @mermaid-js/mermaid-cli mmdc -p puppeteer-config.json -i <name>.mmd -o <name>.png -b white -s 3
