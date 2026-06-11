@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" font-family="'Segoe UI', 'Segoe UI Variable', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1A1A1A"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#5A6B7B"/>
+    </marker>
+    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3DAEE9"/>
+      <stop offset="1" stop-color="#0F6CBD"/>
+    </linearGradient>
+    <linearGradient id="gSwa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5EA0EF"/>
+      <stop offset="1" stop-color="#2B5797"/>
+    </linearGradient>
+
+    <g id="icon-browser">
+      <rect width="64" height="48" rx="7" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="2"/>
+      <path d="M0,7 a7,7 0 0 1 7,-7 h50 a7,7 0 0 1 7,7 v7 h-64 z" fill="#0F6CBD"/>
+      <circle cx="9" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="17" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="25" cy="7" r="2.2" fill="#FFFFFF"/>
+      <rect x="8" y="20" width="26" height="9" rx="4.5" fill="#0F6CBD"/>
+      <rect x="22" y="33" width="26" height="9" rx="4.5" fill="#50E6FF"/>
+    </g>
+    <g id="icon-swa">
+      <rect width="56" height="48" rx="8" fill="url(#gSwa)"/>
+      <path d="M30,7 L18,27 h8 l-4,14 L36,21 h-9 z" fill="#FFFFFF"/>
+    </g>
+    <g id="icon-appsvc">
+      <rect width="56" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="26" cy="25" r="13" fill="none" stroke="#FFFFFF" stroke-width="2.4"/>
+      <ellipse cx="26" cy="25" rx="5.5" ry="13" fill="none" stroke="#FFFFFF" stroke-width="1.8"/>
+      <line x1="13" y1="25" x2="39" y2="25" stroke="#FFFFFF" stroke-width="1.8"/>
+      <circle cx="43" cy="13" r="6.5" fill="#50E6FF"/>
+      <circle cx="43" cy="13" r="2.4" fill="#0F6CBD"/>
+    </g>
+    <g id="icon-kv">
+      <rect width="52" height="48" rx="8" fill="url(#gBlue)"/>
+      <circle cx="20" cy="22" r="8" fill="none" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="27" y1="22" x2="42" y2="22" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="36" y1="22" x2="36" y2="30" stroke="#FFFFFF" stroke-width="3.5"/>
+      <line x1="42" y1="22" x2="42" y2="28" stroke="#FFFFFF" stroke-width="3.5"/>
+    </g>
+    <g id="icon-aoai">
+      <polygon points="26,0 13,22.5 -13,22.5 -26,0 -13,-22.5 13,-22.5" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="4" fill="#0F6CBD"/>
+      <circle cx="0" cy="-13" r="3" fill="#3DAEE9"/>
+      <circle cx="11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <circle cx="-11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <line x1="0" y1="-13" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="-11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+    </g>
+    <g id="icon-sql">
+      <path d="M0,9 v34 a26,9 0 0 0 52,0 v-34 z" fill="url(#gBlue)"/>
+      <ellipse cx="26" cy="9" rx="26" ry="9" fill="#50E6FF"/>
+      <text x="26" y="36" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">SQL</text>
+    </g>
+  </defs>
+
+  <rect width="1800" height="1000" fill="#FFFFFF"/>
+  <text x="900" y="44" text-anchor="middle" font-size="25" font-weight="700" fill="#243A5E">Smart AI Travel Agent — Azure sequence flow (plan and refine an itinerary)</text>
+
+  <!-- ===================== Participants ===================== -->
+  <g>
+    <circle cx="110" cy="92" r="14" fill="#0078D4"/>
+    <rect x="88" y="110" width="44" height="28" rx="14" fill="#0078D4"/>
+    <text x="110" y="160" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">Traveler</text>
+  </g>
+  <g>
+    <use href="#icon-browser" x="323" y="80"/>
+    <text x="355" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">React SPA</text>
+    <text x="355" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">chat planner UI</text>
+  </g>
+  <g>
+    <use href="#icon-swa" x="572" y="80"/>
+    <text x="600" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">Static Web Apps</text>
+    <text x="600" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">frontend hosting</text>
+  </g>
+  <g>
+    <use href="#icon-appsvc" x="827" y="80"/>
+    <text x="855" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">App Service API</text>
+    <text x="855" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">.NET 10 Web API</text>
+  </g>
+  <g>
+    <use href="#icon-kv" x="1074" y="80"/>
+    <text x="1100" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">Key Vault</text>
+    <text x="1100" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">secrets</text>
+  </g>
+  <g>
+    <use href="#icon-aoai" x="1345" y="105"/>
+    <text x="1345" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">Azure OpenAI</text>
+    <text x="1345" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">gpt-4o 'planner'</text>
+  </g>
+  <g>
+    <use href="#icon-sql" x="1604" y="80"/>
+    <text x="1630" y="148" text-anchor="middle" font-size="15" font-weight="600" fill="#243A5E">Azure SQL</text>
+    <text x="1630" y="166" text-anchor="middle" font-size="12" fill="#5A6B7B">trips · chat history</text>
+  </g>
+
+  <!-- ===================== Lifelines ===================== -->
+  <g stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 6">
+    <line x1="110"  y1="180" x2="110"  y2="900"/>
+    <line x1="355"  y1="180" x2="355"  y2="900"/>
+    <line x1="600"  y1="180" x2="600"  y2="900"/>
+    <line x1="855"  y1="180" x2="855"  y2="900"/>
+    <line x1="1100" y1="180" x2="1100" y2="900"/>
+    <line x1="1345" y1="180" x2="1345" y2="900"/>
+    <line x1="1630" y1="180" x2="1630" y2="900"/>
+  </g>
+
+  <!-- ===================== Activation bars ===================== -->
+  <g fill="#BEE3F8" stroke="#7FCDEE" stroke-width="1">
+    <rect x="350"  y="215" width="10" height="510"/>
+    <rect x="595"  y="258" width="10" height="55"/>
+    <rect x="850"  y="340" width="10" height="350"/>
+    <rect x="1095" y="385" width="10" height="55"/>
+    <rect x="1340" y="455" width="10" height="60"/>
+    <rect x="1625" y="590" width="10" height="55"/>
+  </g>
+
+  <!-- ===================== Messages ===================== -->
+  <!-- 1 traveler -> SPA -->
+  <line x1="116" y1="225" x2="345" y2="225" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="233" y="210" text-anchor="middle" font-size="13.5" fill="#243A5E">"5 relaxed days in Lisbon, mid-range budget…"</text>
+  <g transform="translate(135,225)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">1</text></g>
+
+  <!-- 2 SPA -> SWA + return -->
+  <line x1="365" y1="265" x2="590" y2="265" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="478" y="250" text-anchor="middle" font-size="13.5" fill="#243A5E">GET aitravelagent.thiruapps.com (HTTPS)</text>
+  <g transform="translate(384,265)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">2</text></g>
+  <line x1="590" y1="300" x2="365" y2="300" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="478" y="318" text-anchor="middle" font-size="12.5" fill="#5A6B7B">SPA bundle + SPA route fallback</text>
+
+  <!-- 3 SPA -> API -->
+  <line x1="365" y1="350" x2="845" y2="350" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="605" y="335" text-anchor="middle" font-size="13.5" fill="#243A5E">POST /api/trips/plan { request }  —  REST/JSON · CORS · rate limit 10/min</text>
+  <g transform="translate(384,350)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">3</text></g>
+
+  <!-- 4 API -> KV + return -->
+  <line x1="865" y1="395" x2="1090" y2="395" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="978" y="380" text-anchor="middle" font-size="13.5" fill="#243A5E">Key Vault references (managed identity)</text>
+  <g transform="translate(884,395)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">4</text></g>
+  <line x1="1090" y1="428" x2="865" y2="428" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="978" y="446" text-anchor="middle" font-size="12.5" fill="#5A6B7B">SQL conn string · OpenAI key</text>
+
+  <!-- 5 API -> OpenAI + return -->
+  <line x1="865" y1="470" x2="1335" y2="470" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1100" y="455" text-anchor="middle" font-size="13.5" fill="#243A5E">chat completion — strict JSON 'itinerary' schema + preferences + history</text>
+  <g transform="translate(884,470)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">5</text></g>
+  <line x1="1335" y1="505" x2="865" y2="505" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="1100" y="523" text-anchor="middle" font-size="12.5" fill="#5A6B7B">itinerary JSON</text>
+
+  <!-- validation note -->
+  <rect x="700" y="540" width="430" height="36" rx="8" fill="#EAF6FD" stroke="#9AD2F0" stroke-width="1.4"/>
+  <text x="915" y="563" text-anchor="middle" font-size="13" fill="#243A5E">validate + normalize to USD · re-prompt once if invalid JSON</text>
+
+  <!-- 6 API -> SQL + return -->
+  <line x1="865" y1="600" x2="1620" y2="600" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1240" y="585" text-anchor="middle" font-size="13.5" fill="#243A5E">persist trip · days · items · chat turns (EF Core, user-scoped)</text>
+  <g transform="translate(884,600)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">6</text></g>
+  <line x1="1620" y1="633" x2="865" y2="633" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="1240" y="651" text-anchor="middle" font-size="12.5" fill="#5A6B7B">saved (server-derived day + trip totals)</text>
+
+  <!-- 7 API -> SPA return -->
+  <line x1="845" y1="680" x2="365" y2="680" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="605" y="665" text-anchor="middle" font-size="13.5" fill="#243A5E">200 OK — TripDetailDto (itinerary + chat history)</text>
+  <g transform="translate(826,680)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">7</text></g>
+
+  <!-- 8 SPA -> traveler -->
+  <line x1="345" y1="718" x2="120" y2="718" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="233" y="703" text-anchor="middle" font-size="13.5" fill="#243A5E">render day cards + USD cost badges</text>
+  <g transform="translate(326,718)"><circle r="12" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/><text y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#FFFFFF">8</text></g>
+
+  <!-- ===================== Refinement loop band ===================== -->
+  <rect x="70" y="748" width="1660" height="172" rx="14" fill="#F7FCFF" stroke="#7FCDEE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="92" y="776" font-size="15" font-weight="700" fill="#243A5E">⟳ Chat refinement — repeats for every message</text>
+
+  <line x1="365" y1="808" x2="845" y2="808" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="605" y="796" text-anchor="middle" font-size="13" fill="#243A5E">POST /api/trips/{id}/chat — "make day 2 cheaper"</text>
+
+  <line x1="865" y1="845" x2="1335" y2="845" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1100" y="833" text-anchor="middle" font-size="13" fill="#243A5E">re-plan with current itinerary + last 12 chat turns</text>
+
+  <line x1="845" y1="882" x2="365" y2="882" stroke="#5A6B7B" stroke-width="1.8" stroke-dasharray="6 5" marker-end="url(#arrowGray)"/>
+  <text x="605" y="870" text-anchor="middle" font-size="13" fill="#5A6B7B">updated itinerary — days replaced, chat appended</text>
+
+  <line x1="1620" y1="882" x2="1390" y2="882" stroke="#1A1A1A" stroke-width="0" />
+  <text x="1480" y="870" text-anchor="middle" font-size="13" fill="#5A6B7B">(persisted to Azure SQL as in step 6)</text>
+
+  <!-- ===================== Microsoft Azure logo ===================== -->
+  <g>
+    <path d="M60,975 L85,926 L110,975 L97,975 L85,951 L73,975 Z" fill="#0078D4"/>
+    <path d="M85,926 L110,975 L97,975 L85,951 Z" fill="#3DAEE9"/>
+    <text x="124" y="968" font-size="20" fill="#243A5E">Microsoft <tspan font-weight="700">Azure</tspan></text>
+  </g>
+</svg>

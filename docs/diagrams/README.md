@@ -14,8 +14,9 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 6 | Architecture — high-level tiers, AI layer, cross-cutting | [mmd](06-architecture-diagram.mmd) | [svg](06-architecture-diagram.svg) | [png](06-architecture-diagram.png) |
 | 7 | Call-center analytics pipeline — Azure icon-style flow (hand-crafted SVG, not Mermaid) | [svg = source](07-call-center-analytics-pipeline.svg) | [svg](07-call-center-analytics-pipeline.svg) | [png](07-call-center-analytics-pipeline.png) |
 | 8 | Travel agent Azure flow — this project in the same Azure icon style | [svg = source](08-travel-agent-azure-flow.svg) | [svg](08-travel-agent-azure-flow.svg) | [png](08-travel-agent-azure-flow.png) |
+| 9 | Travel agent Azure sequence flow — lifelines + numbered messages, Azure icon style | [svg = source](09-travel-agent-azure-sequence.svg) | [svg](09-travel-agent-azure-sequence.svg) | [png](09-travel-agent-azure-sequence.png) |
 
-Diagrams 7–8 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
+Diagrams 7–9 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
 edit the SVG itself and re-render the PNG by screenshotting it in a browser, e.g.:
 
 ```powershell
