@@ -1,41 +1,13 @@
 # Smart AI Travel Agent — Design Gallery
 
-Visual documentation of the system, from UML models to Azure icon-style flow
-diagrams. Every image links to its scalable SVG; editable sources and
-regeneration instructions are in the [README](README.md).
+Visual documentation of the system: UML models of the code and data, plus
+Azure icon-style flow diagrams of the architecture, deployment, and network.
+Every image links to its scalable SVG; editable sources and regeneration
+instructions are in the [README](README.md).
 
 ---
 
-## 1. Component Diagram
-
-Main modules, their interfaces, and dependencies: React SPA components, the
-clean-architecture API layers (controllers → application services →
-infrastructure adapters), and the external Azure services.
-
-[![Component diagram](01-component-diagram.png)](01-component-diagram.svg)
-
----
-
-## 2. Sequence Diagram (UML)
-
-The plan + chat-refinement request/response flow with actors, objects, and
-message ordering — including the validate/re-prompt branch and server-side
-cost derivation.
-
-[![Sequence diagram](02-sequence-diagram.png)](02-sequence-diagram.svg)
-
----
-
-## 3. Deployment Diagram (UML)
-
-Physical nodes of the Azure dev environment: what runs where, regions, and
-every network connection with its protocol.
-
-[![Deployment diagram](03-deployment-diagram.png)](03-deployment-diagram.svg)
-
----
-
-## 4. Class Diagram
+## Class Diagram
 
 Key entities with attributes, service interfaces with method signatures, and
 the relationships between them (composition, realization, dependencies).
@@ -44,7 +16,7 @@ the relationships between them (composition, realization, dependencies).
 
 ---
 
-## 5. Entity-Relationship Diagram
+## Entity-Relationship Diagram
 
 Database tables, columns with SQL types, primary/foreign/unique keys, and
 crow's-foot cardinality with cascade-delete behavior.
@@ -53,74 +25,42 @@ crow's-foot cardinality with cascade-delete behavior.
 
 ---
 
-## 6. High-Level Architecture
+## Azure Architecture Flow
 
-The one-page big picture: client, edge, API, AI, and data tiers plus
-cross-cutting concerns (Key Vault, App Insights, CI/CD).
-
-[![Architecture diagram](06-architecture-diagram.png)](06-architecture-diagram.svg)
-
----
-
-## 7. Call-Center Analytics Pipeline (Azure icon style)
-
-Reference diagram in the flat Microsoft Azure aesthetic: call capture →
-intelligent transcription (speech-to-text, Language, Azure OpenAI) →
-interaction and visualization.
-
-[![Call-center analytics pipeline](07-call-center-analytics-pipeline.png)](07-call-center-analytics-pipeline.svg)
-
----
-
-## 8. Travel Agent — Azure Architecture Flow
-
-This project in the same Azure icon language: traveler → Static Web Apps →
-App Service API → Azure OpenAI + SQL, with the platform services row and the
-trip-experience outcomes.
+The system in the flat Microsoft Azure icon style: traveler → Static Web Apps →
+App Service API → Azure OpenAI + SQL, with the platform services row
+(Key Vault, App Insights, DevOps) and the trip-experience outcomes,
+numbered steps ①–⑤.
 
 [![Travel agent Azure flow](08-travel-agent-azure-flow.png)](08-travel-agent-azure-flow.svg)
 
 ---
 
-## 9. Travel Agent — Azure Sequence Flow
+## Azure Sequence Flow
 
 Sequence semantics (lifelines, activation bars, calls vs. returns) with
-Azure-icon participants and numbered steps ①–⑧, plus the chat-refinement
-loop band.
+Azure-icon participants and numbered steps ①–⑧ for the planning flow, plus
+the chat-refinement loop band.
 
 [![Travel agent Azure sequence flow](09-travel-agent-azure-sequence.png)](09-travel-agent-azure-sequence.svg)
 
 ---
 
-## 10. Travel Agent — Deployment Flow & Network (combined)
+## Azure Deployment Flow (CI/CD)
 
-Two planes in one view: the **CI/CD deployment plane** (git push → pipelines →
-Bicep provisioning, zip deploy, EF migrations, SWA deploy; green steps ①–⑤)
-and the **runtime network** (blue flows Ⓐ–Ⓕ with ports, CORS, firewall, and
-managed-identity notes) across the westus2/eastus2 region split.
-
-[![Travel agent deployment and network](10-travel-agent-azure-deployment-network.png)](10-travel-agent-azure-deployment-network.svg)
-
----
-
-## 11. Travel Agent — Deployment Flow (CI/CD)
-
-The deployment story on its own, with room for detail: git push → CI triggers →
-both pipelines with their **stages spelled out** (Bicep lint/what-if/deploy;
-build + 51 tests + Sonar/Snyk; migrations → API zip → CORS → SWA → smoke test),
-the service-connection/service-principal identity, and numbered deployment
-actions ①–⑦ into the resource group.
+git push → CI triggers → both pipelines with their stages spelled out
+(Bicep lint/what-if/deploy; build + tests + Sonar/Snyk; migrations → API zip →
+CORS → SWA → smoke test), the service-connection identity, and numbered
+deployment actions ①–⑦ into the resource group.
 
 [![Travel agent deployment flow](11-travel-agent-azure-deployment-flow.png)](11-travel-agent-azure-deployment-flow.svg)
 
 ---
 
-## 12. Travel Agent — Network Diagram (runtime)
+## Azure Network Diagram (runtime)
 
-The runtime network on its own: public-internet boundary, DNS/CNAME resolution,
-flows Ⓐ–Ⓕ with ports and protocols (443 everywhere, TDS 1433/TLS to SQL),
-CORS and rate-limit annotations, the westus2/eastus2 split, and a
-**network security posture** panel summarizing TLS, firewall, managed-identity,
-and rate-limiting rules.
+Public-internet boundary, DNS/CNAME resolution, flows Ⓐ–Ⓕ with ports and
+protocols (443 everywhere, TDS 1433/TLS to SQL), CORS and rate-limit
+annotations, the westus2/eastus2 split, and a network security posture panel.
 
 [![Travel agent network diagram](12-travel-agent-azure-network.png)](12-travel-agent-azure-network.svg)
