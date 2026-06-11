@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="950" viewBox="0 0 1800 950" font-family="'Segoe UI', 'Segoe UI Variable', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#1A1A1A"/>
+    </marker>
+    <marker id="arrowNavy" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#243A5E"/>
+    </marker>
+    <marker id="arrowNavyStart" markerWidth="9" markerHeight="9" refX="1" refY="4" orient="auto">
+      <path d="M8,0 L0,4 L8,8 Z" fill="#243A5E"/>
+    </marker>
+    <linearGradient id="gBlob" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5EA0EF"/>
+      <stop offset="1" stop-color="#0F6CBD"/>
+    </linearGradient>
+    <linearGradient id="gServer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3DAEE9"/>
+      <stop offset="1" stop-color="#0F6CBD"/>
+    </linearGradient>
+
+    <!-- Blob Storage icon (56 x 46) -->
+    <g id="icon-blob">
+      <rect width="56" height="46" rx="8" fill="url(#gBlob)"/>
+      <circle cx="18" cy="29" r="9" fill="#FFFFFF" opacity="0.95"/>
+      <circle cx="38" cy="15" r="6.5" fill="#FFFFFF" opacity="0.95"/>
+      <circle cx="38" cy="31" r="4.5" fill="#FFFFFF" opacity="0.95"/>
+    </g>
+
+    <!-- Speech-to-text icon (52 x 44) -->
+    <g id="icon-stt">
+      <path d="M0,8 a8,8 0 0 1 8,-8 h36 a8,8 0 0 1 8,8 v20 a8,8 0 0 1 -8,8 h-22 l-10,8 v-8 h-4 a8,8 0 0 1 -8,-8 z" fill="#0078D4"/>
+      <rect x="9"  y="14" width="4" height="8"  rx="2" fill="#FFFFFF"/>
+      <rect x="16" y="10" width="4" height="16" rx="2" fill="#FFFFFF"/>
+      <rect x="23" y="7"  width="4" height="22" rx="2" fill="#FFFFFF"/>
+      <rect x="30" y="11" width="4" height="14" rx="2" fill="#FFFFFF"/>
+      <rect x="37" y="14" width="4" height="8"  rx="2" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Language icon (56 x 42) -->
+    <g id="icon-lang">
+      <rect x="0" y="0" width="34" height="26" rx="6" fill="#0078D4"/>
+      <text x="17" y="19" text-anchor="middle" font-size="16" font-weight="700" fill="#FFFFFF">A</text>
+      <rect x="22" y="15" width="34" height="26" rx="6" fill="#50E6FF"/>
+      <text x="39" y="33" text-anchor="middle" font-size="13" font-weight="700" fill="#0F548C">ab</text>
+    </g>
+
+    <!-- Azure OpenAI icon (hexagon, centered on 0,0) -->
+    <g id="icon-aoai">
+      <polygon points="26,0 13,22.5 -13,22.5 -26,0 -13,-22.5 13,-22.5" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="3.5" stroke-linejoin="round"/>
+      <circle cx="0" cy="0" r="4" fill="#0F6CBD"/>
+      <circle cx="0" cy="-13" r="3" fill="#3DAEE9"/>
+      <circle cx="11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <circle cx="-11" cy="6.5" r="3" fill="#3DAEE9"/>
+      <line x1="0" y1="-13" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+      <line x1="-11" y1="6.5" x2="0" y2="0" stroke="#3DAEE9" stroke-width="2"/>
+    </g>
+
+    <!-- Power BI icon (44 x 46, baseline bottom) -->
+    <g id="icon-pbi">
+      <rect x="0"  y="24" width="11" height="22" rx="3" fill="#F2C811"/>
+      <rect x="15" y="12" width="11" height="34" rx="3" fill="#E8B40A"/>
+      <rect x="30" y="0"  width="11" height="46" rx="3" fill="#F2C811"/>
+    </g>
+
+    <!-- Web app icon (64 x 48) -->
+    <g id="icon-web">
+      <rect width="64" height="48" rx="7" fill="#E8F6FD" stroke="#0F6CBD" stroke-width="2"/>
+      <path d="M0,7 a7,7 0 0 1 7,-7 h50 a7,7 0 0 1 7,7 v7 h-64 z" fill="#0F6CBD"/>
+      <circle cx="9"  cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="17" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="25" cy="7" r="2.2" fill="#FFFFFF"/>
+      <circle cx="32" cy="30" r="11" fill="#FFFFFF" stroke="#0F6CBD" stroke-width="2"/>
+      <ellipse cx="32" cy="30" rx="4.8" ry="11" fill="none" stroke="#0F6CBD" stroke-width="1.6"/>
+      <line x1="21" y1="30" x2="43" y2="30" stroke="#0F6CBD" stroke-width="1.6"/>
+    </g>
+
+    <!-- CRM icon (60 x 48) -->
+    <g id="icon-crm">
+      <rect width="60" height="48" rx="8" fill="#0F6CBD"/>
+      <circle cx="20" cy="16" r="6.5" fill="#FFFFFF"/>
+      <rect x="9" y="25" width="22" height="14" rx="7" fill="#FFFFFF"/>
+      <circle cx="42" cy="17" r="5.5" fill="#9CD2F0"/>
+      <rect x="33" y="26" width="18" height="12" rx="6" fill="#9CD2F0"/>
+    </g>
+  </defs>
+
+  <!-- background -->
+  <rect width="1800" height="950" fill="#FFFFFF"/>
+
+  <!-- ===================== LEFT ZONE — Call source ===================== -->
+  <!-- Caller -->
+  <g>
+    <circle cx="110" cy="140" r="16" fill="#0078D4"/>
+    <rect x="84" y="161" width="52" height="34" rx="17" fill="#0078D4"/>
+    <rect x="138" y="166" width="30" height="7" rx="3.5" fill="#243A5E"/>
+    <rect x="140" y="176" width="26" height="16" rx="3" fill="#243A5E"/>
+    <text x="110" y="220" text-anchor="middle" font-size="16" fill="#243A5E">Caller</text>
+  </g>
+
+  <!-- Person-to-person dashed double arrow -->
+  <line x1="110" y1="245" x2="110" y2="445" stroke="#243A5E" stroke-width="2" stroke-dasharray="7 6" marker-start="url(#arrowNavyStart)" marker-end="url(#arrowNavy)"/>
+  <text x="128" y="338" font-size="14" fill="#243A5E">Person-to-person</text>
+  <text x="128" y="357" font-size="14" fill="#243A5E">conversation</text>
+
+  <!-- Call center agent -->
+  <g>
+    <circle cx="110" cy="495" r="16" fill="#0078D4"/>
+    <path d="M94,494 a16,16 0 0 1 32,0" fill="none" stroke="#243A5E" stroke-width="4"/>
+    <rect x="89" y="489" width="8" height="13" rx="3.5" fill="#243A5E"/>
+    <rect x="123" y="489" width="8" height="13" rx="3.5" fill="#243A5E"/>
+    <path d="M127,502 Q127,514 116,514" fill="none" stroke="#243A5E" stroke-width="3"/>
+    <circle cx="114" cy="514" r="3" fill="#243A5E"/>
+    <rect x="84" y="516" width="52" height="34" rx="17" fill="#0078D4"/>
+    <text x="110" y="575" text-anchor="middle" font-size="16" fill="#243A5E">Call center agent</text>
+  </g>
+
+  <!-- Telephony server -->
+  <g>
+    <rect x="268" y="298" width="74" height="88" rx="7" fill="url(#gServer)"/>
+    <rect x="274" y="305" width="62" height="22" rx="3" fill="#FFFFFF" opacity="0.92"/>
+    <rect x="274" y="332" width="62" height="22" rx="3" fill="#FFFFFF" opacity="0.78"/>
+    <rect x="274" y="359" width="62" height="22" rx="3" fill="#FFFFFF" opacity="0.92"/>
+    <circle cx="328" cy="316" r="3" fill="#0F6CBD"/>
+    <circle cx="328" cy="343" r="3" fill="#0F6CBD"/>
+    <circle cx="328" cy="370" r="3" fill="#0F6CBD"/>
+    <rect x="280" y="313" width="22" height="5" rx="2.5" fill="#3DAEE9"/>
+    <rect x="280" y="340" width="22" height="5" rx="2.5" fill="#3DAEE9"/>
+    <rect x="280" y="367" width="22" height="5" rx="2.5" fill="#3DAEE9"/>
+    <text x="305" y="412" text-anchor="middle" font-size="16" fill="#243A5E">Telephony server</text>
+  </g>
+
+  <!-- caller/agent -> telephony server -->
+  <line x1="150" y1="185" x2="262" y2="318" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="150" y1="512" x2="262" y2="366" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- telephony -> blob 1, step 1 -->
+  <line x1="346" y1="340" x2="424" y2="338" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="385" y="322" text-anchor="middle" font-size="14" fill="#243A5E">File upload</text>
+  <g transform="translate(385,362)">
+    <circle r="13" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/>
+    <text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">1</text>
+  </g>
+  <use href="#icon-blob" x="430" y="314"/>
+  <text x="458" y="385" text-anchor="middle" font-size="15" fill="#243A5E">Blob Storage</text>
+
+  <!-- blob 1 -> middle zone -->
+  <line x1="492" y1="337" x2="568" y2="337" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="530" y="322" text-anchor="middle" font-size="14" fill="#243A5E">Audio files</text>
+
+  <!-- ===================== MIDDLE ZONE — Intelligent transcription ===================== -->
+  <rect x="575" y="105" width="660" height="545" rx="18" fill="none" stroke="#7FCDEE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="605" y="145" font-size="21" font-weight="700" fill="#243A5E">Intelligent transcription</text>
+  <text x="605" y="172" font-size="15" fill="#5A6B7B">Extract insights from call transcripts</text>
+
+  <!-- Extraction sub-box (step 2) -->
+  <rect x="600" y="205" width="190" height="360" rx="12" fill="none" stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text x="695" y="234" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">Extraction</text>
+  <g transform="translate(606,211)">
+    <circle r="13" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/>
+    <text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">2</text>
+  </g>
+  <use href="#icon-stt" x="669" y="300"/>
+  <text x="695" y="385" text-anchor="middle" font-size="15" fill="#243A5E">Azure speech</text>
+  <text x="695" y="404" text-anchor="middle" font-size="15" fill="#243A5E">to text</text>
+
+  <!-- Storage sub-box -->
+  <rect x="810" y="205" width="190" height="360" rx="12" fill="none" stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text x="905" y="234" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">Storage</text>
+  <use href="#icon-blob" x="877" y="298"/>
+  <text x="905" y="385" text-anchor="middle" font-size="15" fill="#243A5E">Blob Storage</text>
+
+  <!-- Enrichment sub-box (steps 3 and 4) -->
+  <rect x="1020" y="205" width="190" height="360" rx="12" fill="none" stroke="#9AD2F0" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text x="1115" y="234" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">Enrichment</text>
+  <g transform="translate(1026,211)">
+    <circle r="13" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/>
+    <text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">3</text>
+  </g>
+  <use href="#icon-lang" x="1087" y="262"/>
+  <text x="1115" y="332" text-anchor="middle" font-size="15" fill="#243A5E">Language</text>
+  <line x1="1115" y1="345" x2="1115" y2="408" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <g transform="translate(1140,377)">
+    <circle r="13" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/>
+    <text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">4</text>
+  </g>
+  <use href="#icon-aoai" x="1115" y="448"/>
+  <text x="1115" y="505" text-anchor="middle" font-size="15" fill="#243A5E">Azure OpenAI</text>
+
+  <!-- arrows between sub-boxes -->
+  <line x1="792" y1="385" x2="808" y2="385" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1002" y1="385" x2="1018" y2="385" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- exit arrow (step 5) -> blob 2 -->
+  <line x1="1237" y1="378" x2="1295" y2="378" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+  <g transform="translate(1266,355)">
+    <circle r="13" fill="#57A300" stroke="#FFFFFF" stroke-width="2"/>
+    <text y="5" text-anchor="middle" font-size="14" font-weight="700" fill="#FFFFFF">5</text>
+  </g>
+  <use href="#icon-blob" x="1300" y="355"/>
+  <text x="1328" y="425" text-anchor="middle" font-size="15" fill="#243A5E">Blob Storage</text>
+
+  <!-- blob 2 -> right zone -->
+  <line x1="1362" y1="378" x2="1418" y2="378" stroke="#1A1A1A" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===================== RIGHT ZONE — Interact and visualize ===================== -->
+  <rect x="1425" y="140" width="340" height="650" rx="18" fill="none" stroke="#7FCDEE" stroke-width="2" stroke-dasharray="9 7"/>
+  <text x="1450" y="180" font-size="21" font-weight="700" fill="#243A5E">Interact and visualize</text>
+
+  <!-- Power BI -->
+  <use href="#icon-pbi" x="1573" y="225"/>
+  <text x="1595" y="305" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">Insights in Power BI</text>
+  <text x="1595" y="326" text-anchor="middle" font-size="13" fill="#5A6B7B">(Near real time)</text>
+
+  <!-- Web app -->
+  <use href="#icon-web" x="1563" y="385"/>
+  <text x="1595" y="462" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">Web app</text>
+
+  <!-- CRM -->
+  <use href="#icon-crm" x="1565" y="525"/>
+  <text x="1595" y="602" text-anchor="middle" font-size="16" font-weight="600" fill="#243A5E">CRM</text>
+  <text x="1595" y="626" text-anchor="middle" font-size="13" fill="#5A6B7B">Detailed call history, summaries,</text>
+  <text x="1595" y="644" text-anchor="middle" font-size="13" fill="#5A6B7B">and reasons for calling</text>
+
+  <!-- ===================== Microsoft Azure logo ===================== -->
+  <g>
+    <path d="M60,908 L88,853 L116,908 L101,908 L88,881 L75,908 Z" fill="#0078D4"/>
+    <path d="M88,853 L116,908 L101,908 L88,881 Z" fill="#3DAEE9"/>
+    <text x="130" y="900" font-size="22" fill="#243A5E">Microsoft <tspan font-weight="700">Azure</tspan></text>
+  </g>
+</svg>

@@ -12,6 +12,14 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 4 | Class — entities, services, interfaces | [mmd](04-class-diagram.mmd) | [svg](04-class-diagram.svg) | [png](04-class-diagram.png) |
 | 5 | Entity-Relationship — tables, keys, cardinality | [mmd](05-er-diagram.mmd) | [svg](05-er-diagram.svg) | [png](05-er-diagram.png) |
 | 6 | Architecture — high-level tiers, AI layer, cross-cutting | [mmd](06-architecture-diagram.mmd) | [svg](06-architecture-diagram.svg) | [png](06-architecture-diagram.png) |
+| 7 | Call-center analytics pipeline — Azure icon-style flow (hand-crafted SVG, not Mermaid) | [svg = source](07-call-center-analytics-pipeline.svg) | [svg](07-call-center-analytics-pipeline.svg) | [png](07-call-center-analytics-pipeline.png) |
+
+Diagram 7 is authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
+edit the SVG itself and re-render the PNG by screenshotting it in a browser, e.g.:
+
+```powershell
+chrome --headless --hide-scrollbars --screenshot=07-call-center-analytics-pipeline.png --window-size=3600,1900 <wrapper.html with the svg at 2x>
+```
 
 ## Editing & regenerating
 
