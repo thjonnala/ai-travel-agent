@@ -13,8 +13,9 @@ high-resolution raster (`.png`, rendered at 3× scale).
 | 5 | Entity-Relationship — tables, keys, cardinality | [mmd](05-er-diagram.mmd) | [svg](05-er-diagram.svg) | [png](05-er-diagram.png) |
 | 6 | Architecture — high-level tiers, AI layer, cross-cutting | [mmd](06-architecture-diagram.mmd) | [svg](06-architecture-diagram.svg) | [png](06-architecture-diagram.png) |
 | 7 | Call-center analytics pipeline — Azure icon-style flow (hand-crafted SVG, not Mermaid) | [svg = source](07-call-center-analytics-pipeline.svg) | [svg](07-call-center-analytics-pipeline.svg) | [png](07-call-center-analytics-pipeline.png) |
+| 8 | Travel agent Azure flow — this project in the same Azure icon style | [svg = source](08-travel-agent-azure-flow.svg) | [svg](08-travel-agent-azure-flow.svg) | [png](08-travel-agent-azure-flow.png) |
 
-Diagram 7 is authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
+Diagrams 7–8 are authored directly as SVG (Mermaid can't do Azure-icon-style layouts);
 edit the SVG itself and re-render the PNG by screenshotting it in a browser, e.g.:
 
 ```powershell
