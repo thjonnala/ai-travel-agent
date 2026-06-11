@@ -1,0 +1,160 @@
+---
+title: Smart AI Travel Agent — Class Diagram (domain + application core)
+config:
+  theme: neutral
+---
+classDiagram
+    direction LR
+
+    class User {
+        +Guid Id
+        +string ExternalAuthId
+        +string Email
+        +string DisplayName
+        +DateTimeOffset CreatedAt
+    }
+    class TravelerPreference {
+        +Guid Id
+        +Guid UserId
+        +BudgetBand BudgetBand
+        +TripPace Pace
+        +string Interests
+        +string? DietaryNeeds
+        +string? Accessibility
+        +DateTimeOffset UpdatedAt
+    }
+    class Trip {
+        +Guid Id
+        +Guid UserId
+        +string Title
+        +string Destination
+        +DateOnly? StartDate
+        +DateOnly? EndDate
+        +TripStatus Status
+        +decimal EstimatedTotalCost
+        +string Currency
+        +DateTimeOffset CreatedAt
+        +DateTimeOffset UpdatedAt
+    }
+    class ItineraryDay {
+        +Guid Id
+        +Guid TripId
+        +int DayNumber
+        +DateOnly? Date
+        +string? Summary
+        +decimal EstimatedDayCost
+    }
+    class ItineraryItem {
+        +Guid Id
+        +Guid ItineraryDayId
+        +TimeBlock TimeBlock
+        +ItineraryItemType Type
+        +int SortOrder
+        +string Title
+        +string? Description
+        +decimal EstimatedCost
+        +string? LocationName
+        +double? Lat
+        +double? Lng
+    }
+    class ChatMessage {
+        +Guid Id
+        +Guid TripId
+        +ChatRole Role
+        +string Content
+        +DateTimeOffset CreatedAt
+    }
+
+    User "1" --> "0..1" TravelerPreference : preference
+    User "1" --> "*" Trip : trips
+    Trip "1" *-- "*" ItineraryDay : days
+    ItineraryDay "1" *-- "*" ItineraryItem : items
+    Trip "1" *-- "*" ChatMessage : chatMessages
+
+    class IAiPlannerService {
+        <<interface>>
+        +GeneratePlanAsync(PlanningContext) ItineraryDraft
+    }
+    class ITripPlanningService {
+        <<interface>>
+        +PlanAsync(userId, PlanTripRequest) TripDetailDto?
+    }
+    class ITripService {
+        <<interface>>
+        +ListAsync(userId, page, pageSize) PagedResult~TripSummaryDto~
+        +GetAsync(userId, tripId) TripDetailDto?
+        +UpdateAsync(userId, tripId, UpdateTripRequest) TripDetailDto?
+        +DeleteAsync(userId, tripId) bool
+        +DuplicateAsync(userId, tripId) TripDetailDto?
+    }
+    class IPreferenceService {
+        <<interface>>
+        +GetAsync(userId) PreferenceDto
+        +UpdateAsync(userId, UpdatePreferenceRequest) PreferenceDto
+    }
+    class ICurrentUserService {
+        <<interface>>
+        +GetCurrentUserIdAsync() Guid
+    }
+    class IApplicationDbContext {
+        <<interface>>
+        +DbSet~User~ Users
+        +DbSet~Trip~ Trips
+        +DbSet~TravelerPreference~ TravelerPreferences
+        +DbSet~ItineraryDay~ ItineraryDays
+        +DbSet~ItineraryItem~ ItineraryItems
+        +DbSet~ChatMessage~ ChatMessages
+        +SaveChangesAsync() int
+    }
+
+    class TripPlanningService {
+        -HistoryWindow: int = 12
+        +PlanAsync(userId, PlanTripRequest) TripDetailDto?
+    }
+    class TripService
+    class PreferenceService
+    class AzureOpenAiPlannerService {
+        +GeneratePlanAsync(PlanningContext) ItineraryDraft
+        -CompleteAsync(messages, options) string
+        -TryParse(raw) (draft, errors)
+    }
+    class MockAiPlannerService {
+        +GeneratePlanAsync(PlanningContext) ItineraryDraft
+    }
+    class DemoCurrentUserService
+    class TravelAgentDbContext
+    class ItineraryValidator {
+        <<static>>
+        +Validate(ItineraryDraft) errors
+    }
+    class ItineraryDraft {
+        +string Title
+        +string Destination
+        +DateOnly? StartDate
+        +DateOnly? EndDate
+        +string Currency
+        +string AssistantMessage
+        +List~ItineraryDayDraft~ Days
+    }
+    class PlanningContext {
+        +string UserRequest
+        +TravelerPreferenceInfo? Preferences
+        +ItineraryDraft? CurrentItinerary
+        +IReadOnlyList~ChatTurn~ History
+    }
+
+    ITripPlanningService <|.. TripPlanningService
+    ITripService <|.. TripService
+    IPreferenceService <|.. PreferenceService
+    IAiPlannerService <|.. AzureOpenAiPlannerService
+    IAiPlannerService <|.. MockAiPlannerService
+    ICurrentUserService <|.. DemoCurrentUserService
+    IApplicationDbContext <|.. TravelAgentDbContext
+
+    TripPlanningService ..> IAiPlannerService : plans via
+    TripPlanningService ..> ItineraryValidator : validates with
+    TripPlanningService ..> IApplicationDbContext : persists via
+    TripService ..> IApplicationDbContext
+    PreferenceService ..> IApplicationDbContext
+    IAiPlannerService ..> PlanningContext : consumes
+    IAiPlannerService ..> ItineraryDraft : produces

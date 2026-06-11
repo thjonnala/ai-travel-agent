@@ -1,0 +1,70 @@
+---
+title: Smart AI Travel Agent — Entity-Relationship Diagram (Azure SQL via EF Core)
+config:
+  theme: neutral
+---
+erDiagram
+    Users {
+        uniqueidentifier Id PK
+        nvarchar_128 ExternalAuthId UK "unique index"
+        nvarchar_320 Email
+        nvarchar_200 DisplayName
+        datetimeoffset CreatedAt
+    }
+    TravelerPreferences {
+        uniqueidentifier Id PK
+        uniqueidentifier UserId FK,UK "one per user"
+        nvarchar_20 BudgetBand "enum as string"
+        nvarchar_20 Pace "enum as string"
+        nvarchar_2000 Interests "JSON array"
+        nvarchar_500 DietaryNeeds "null"
+        nvarchar_500 Accessibility "null"
+        datetimeoffset UpdatedAt
+    }
+    Trips {
+        uniqueidentifier Id PK
+        uniqueidentifier UserId FK "indexed"
+        nvarchar_200 Title
+        nvarchar_200 Destination
+        date StartDate "null"
+        date EndDate "null"
+        nvarchar_20 Status "enum as string"
+        decimal_18_2 EstimatedTotalCost
+        nvarchar_3 Currency "USD-only"
+        datetimeoffset CreatedAt
+        datetimeoffset UpdatedAt
+    }
+    ItineraryDays {
+        uniqueidentifier Id PK
+        uniqueidentifier TripId FK "unique (TripId, DayNumber)"
+        int DayNumber
+        date Date "null"
+        nvarchar_1000 Summary "null"
+        decimal_18_2 EstimatedDayCost
+    }
+    ItineraryItems {
+        uniqueidentifier Id PK
+        uniqueidentifier ItineraryDayId FK "indexed"
+        nvarchar_20 TimeBlock "enum as string"
+        nvarchar_20 Type "enum as string"
+        int SortOrder
+        nvarchar_300 Title
+        nvarchar_2000 Description "null"
+        decimal_18_2 EstimatedCost
+        nvarchar_300 LocationName "null"
+        float Lat "null"
+        float Lng "null"
+    }
+    ChatMessages {
+        uniqueidentifier Id PK
+        uniqueidentifier TripId FK "indexed (TripId, CreatedAt)"
+        nvarchar_20 Role "enum as string"
+        nvarchar_max Content
+        datetimeoffset CreatedAt
+    }
+
+    Users ||--o| TravelerPreferences : "has preference (cascade delete)"
+    Users ||--o{ Trips : "owns (cascade delete)"
+    Trips ||--o{ ItineraryDays : "contains (cascade delete)"
+    ItineraryDays ||--o{ ItineraryItems : "contains (cascade delete)"
+    Trips ||--o{ ChatMessages : "logs (cascade delete)"

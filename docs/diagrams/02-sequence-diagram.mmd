@@ -1,0 +1,57 @@
+---
+title: Smart AI Travel Agent — Sequence Diagram (plan + chat refinement)
+config:
+  theme: neutral
+---
+sequenceDiagram
+    autonumber
+    actor Traveler
+    participant SPA as React SPA<br/>(PlannerPage)
+    participant Ctrl as TripsController
+    participant Cur as ICurrentUserService<br/>(DemoCurrentUserService)
+    participant Plan as TripPlanningService
+    participant AI as IAiPlannerService<br/>(AzureOpenAiPlannerService)
+    participant OAI as Azure OpenAI<br/>(gpt-4o 'planner')
+    participant Val as ItineraryValidator
+    participant Db as TravelAgentDbContext<br/>→ Azure SQL
+
+    Traveler->>SPA: type "5 relaxed days in Lisbon…"
+    SPA->>Ctrl: POST /api/trips/plan { request }
+    Note over Ctrl: RateLimiter 'ai'<br/>10 req/min per IP
+    Ctrl->>Cur: GetCurrentUserIdAsync()
+    Cur->>Db: find-or-create demo user
+    Db-->>Cur: userId
+    Ctrl->>Plan: PlanAsync(userId, request)
+    Plan->>Db: load TravelerPreference
+    Db-->>Plan: preferences (budget, pace, interests…)
+    Plan->>AI: GeneratePlanAsync(PlanningContext)
+    AI->>OAI: CompleteChatAsync(system + user msgs,<br/>strict JSON schema 'itinerary')
+    OAI-->>AI: itinerary JSON
+    AI->>Val: Validate(draft)
+    alt draft invalid
+        AI->>OAI: re-prompt once with validation errors
+        OAI-->>AI: corrected itinerary JSON
+        AI->>Val: Validate(draft)
+    end
+    Val-->>AI: normalized draft (USD, day numbering, limits)
+    AI-->>Plan: ItineraryDraft
+    Plan->>Plan: derive day costs + trip total<br/>(never trusted from the model)
+    Plan->>Db: save Trip + Days + Items<br/>+ user/assistant ChatMessages
+    Db-->>Plan: persisted trip
+    Plan-->>Ctrl: TripDetailDto
+    Ctrl-->>SPA: 200 OK (itinerary + chat history)
+    SPA-->>Traveler: render day cards + cost badges
+
+    Traveler->>SPA: "make day 2 cheaper"
+    SPA->>Ctrl: POST /api/trips/{id}/chat { message }
+    Ctrl->>Plan: PlanAsync(userId, message, tripId)
+    Plan->>Db: load trip + days + last 12 chat turns
+    Db-->>Plan: current itinerary + history
+    Plan->>AI: GeneratePlanAsync(context incl.<br/>current itinerary + history)
+    AI->>OAI: CompleteChatAsync(…)
+    OAI-->>AI: revised itinerary JSON
+    AI-->>Plan: ItineraryDraft
+    Plan->>Db: replace days, append chat turns
+    Plan-->>Ctrl: TripDetailDto
+    Ctrl-->>SPA: 200 OK (updated plan)
+    SPA-->>Traveler: re-render itinerary
