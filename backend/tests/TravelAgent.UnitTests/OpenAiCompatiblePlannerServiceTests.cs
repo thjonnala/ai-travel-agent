@@ -8,7 +8,7 @@ using TravelAgent.Infrastructure.Ai;
 
 namespace TravelAgent.UnitTests;
 
-public class AzureOpenAiPlannerServiceTests
+public class OpenAiCompatiblePlannerServiceTests
 {
     private const string ValidItineraryJson = """
         {
@@ -37,8 +37,8 @@ public class AzureOpenAiPlannerServiceTests
         IReadOnlyList<ChatTurn>? history = null) =>
         new("2 days in Porto", preferences, current, history ?? []);
 
-    private static AzureOpenAiPlannerService Service(FakeChatClient client) =>
-        new(client, NullLogger<AzureOpenAiPlannerService>.Instance);
+    private static OpenAiCompatiblePlannerService Service(FakeChatClient client) =>
+        new(client, NullLogger<OpenAiCompatiblePlannerService>.Instance);
 
     [Fact]
     public async Task Returns_parsed_itinerary_on_valid_response()
@@ -65,15 +65,16 @@ public class AzureOpenAiPlannerServiceTests
         await Service(client).GeneratePlanAsync(Context(preferences, current, history));
 
         var messages = client.Calls.Single();
-        // system + current itinerary + 2 history turns + new request
-        Assert.Equal(5, messages.Count);
+        // system prompt + system schema + current itinerary + 2 history turns + new request
+        Assert.Equal(6, messages.Count);
         var system = messages[0].Content[0].Text;
         Assert.Contains("Luxury", system);
         Assert.Contains("vegetarian", system);
         Assert.Contains("step-free", system);
-        Assert.Contains("Old plan", messages[1].Content[0].Text);
-        Assert.Equal("first ask", messages[2].Content[0].Text);
-        Assert.Equal("2 days in Porto", messages[4].Content[0].Text);
+        Assert.Contains("JSON schema", messages[1].Content[0].Text);
+        Assert.Contains("Old plan", messages[2].Content[0].Text);
+        Assert.Equal("first ask", messages[3].Content[0].Text);
+        Assert.Equal("2 days in Porto", messages[5].Content[0].Text);
     }
 
     [Fact]

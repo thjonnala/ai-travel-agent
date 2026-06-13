@@ -1,8 +1,10 @@
 using System.ClientModel;
-using Azure.AI.OpenAI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
+using OpenAI;
+using OpenAI.Chat;
 using TravelAgent.Application.Common;
 using TravelAgent.Application.Planning;
 using TravelAgent.Infrastructure.Ai;
@@ -24,12 +26,12 @@ public static class DependencyInjection
             throw new InvalidOperationException("Connection string 'TravelAgentDb' is not configured.");
 
         services.AddDbContext<TravelAgentDbContext>(options =>
-            options.UseSqlServer(connectionString, sql =>
-                sql.EnableRetryOnFailure(maxRetryCount: 5)));
+            options.UseNpgsql(NormalizePostgresConnectionString(connectionString), npgsql =>
+                npgsql.EnableRetryOnFailure(maxRetryCount: 5)));
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<TravelAgentDbContext>());
 
         // Demo mode: fixed local user. Replaced by a JWT-claims implementation
-        // when Entra ID auth is enabled.
+        // when real auth is enabled.
         services.AddScoped<ICurrentUserService, DemoCurrentUserService>();
 
         AddAiPlanner(services, configuration);
@@ -39,21 +41,50 @@ public static class DependencyInjection
 
     private static void AddAiPlanner(IServiceCollection services, IConfiguration configuration)
     {
-        var options = configuration.GetSection(AzureOpenAiOptions.SectionName).Get<AzureOpenAiOptions>() ?? new AzureOpenAiOptions();
+        var options = configuration.GetSection(AiOptions.SectionName).Get<AiOptions>() ?? new AiOptions();
 
         if (options.IsConfigured)
         {
-            // ChatClient is thread-safe; one instance per app.
-            services.AddSingleton(_ =>
-                new AzureOpenAIClient(new Uri(options.Endpoint), new ApiKeyCredential(options.ApiKey))
-                    .GetChatClient(options.Deployment));
-            services.AddScoped<IAiPlannerService, AzureOpenAiPlannerService>();
+            // ChatClient is thread-safe; one instance per app. The endpoint makes
+            // this work with any OpenAI-compatible provider (Groq, OpenRouter, …).
+            services.AddSingleton(_ => new ChatClient(
+                model: options.Model,
+                credential: new ApiKeyCredential(options.ApiKey),
+                options: new OpenAIClientOptions { Endpoint = new Uri(options.Endpoint) }));
+            services.AddScoped<IAiPlannerService, OpenAiCompatiblePlannerService>();
         }
         else
         {
-            // No keys configured: keep the demo fully functional with a
+            // No AI provider configured: keep the app fully functional with a
             // deterministic planner instead of failing at startup.
             services.AddSingleton<IAiPlannerService, MockAiPlannerService>();
         }
+    }
+
+    /// <summary>
+    /// Render (and many managed Postgres hosts) hand out a "postgres://user:pass@host/db"
+    /// URL, which Npgsql doesn't parse. Convert it to the key-value form Npgsql expects;
+    /// pass through anything already in key-value format unchanged.
+    /// </summary>
+    private static string NormalizePostgresConnectionString(string raw)
+    {
+        if (!raw.StartsWith("postgres://", StringComparison.OrdinalIgnoreCase)
+            && !raw.StartsWith("postgresql://", StringComparison.OrdinalIgnoreCase))
+            return raw;
+
+        var uri = new Uri(raw);
+        var userInfo = uri.UserInfo.Split(':', 2);
+        var builder = new NpgsqlConnectionStringBuilder
+        {
+            Host = uri.Host,
+            Port = uri.IsDefaultPort ? 5432 : uri.Port,
+            Database = uri.AbsolutePath.TrimStart('/'),
+            Username = Uri.UnescapeDataString(userInfo[0]),
+            Password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : "",
+            // Managed Postgres requires TLS; trust the provider-managed certificate.
+            SslMode = SslMode.Require,
+            TrustServerCertificate = true,
+        };
+        return builder.ConnectionString;
     }
 }

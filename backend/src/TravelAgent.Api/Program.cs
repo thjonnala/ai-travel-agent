@@ -1,10 +1,18 @@
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
 using TravelAgent.Application;
 using TravelAgent.Infrastructure;
+using TravelAgent.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Render (and most container hosts) inject the listen port via PORT.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -17,6 +25,15 @@ builder.Services.AddControllers()
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
 builder.Services.AddHealthChecks();
+
+// Behind Render's TLS-terminating proxy: trust X-Forwarded-* so the scheme and
+// client IP (used by the rate limiter) reflect the real request.
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 // Locked-down CORS for the deployed frontend origin(s); not needed in local
 // dev where Vite proxies /api. Setting: Cors__AllowedOrigins (comma-separated).
@@ -45,6 +62,16 @@ builder.Services.AddRateLimiter(options =>
 
 var app = builder.Build();
 
+// Apply EF Core migrations on startup against PostgreSQL. Skipped for the
+// Sqlite-backed test host (its provider isn't Npgsql).
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TravelAgentDbContext>();
+    if (db.Database.ProviderName == "Npgsql.EntityFrameworkCore.PostgreSQL")
+        db.Database.Migrate();
+}
+
+app.UseForwardedHeaders();
 app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
@@ -54,7 +81,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "TravelAgent API v1"));
 }
 
-app.UseHttpsRedirection();
+// No HTTPS redirect in-container: Render terminates TLS at the edge and
+// forwards plain HTTP, so a redirect here would loop.
 if (allowedOrigins.Length > 0) app.UseCors();
 app.UseRateLimiter();
 

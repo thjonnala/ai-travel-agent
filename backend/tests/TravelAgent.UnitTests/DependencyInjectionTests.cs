@@ -13,6 +13,8 @@ namespace TravelAgent.UnitTests;
 
 public class DependencyInjectionTests
 {
+    private const string FakeConnString = "Host=localhost;Database=ignored;Username=u;Password=p";
+
     private static IConfiguration Config(Dictionary<string, string?> values) =>
         new ConfigurationBuilder().AddInMemoryCollection(values).Build();
 
@@ -33,29 +35,29 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void Without_openai_settings_the_mock_planner_is_used()
+    public void Without_ai_settings_the_mock_planner_is_used()
     {
         using var provider = BuildProvider(new Dictionary<string, string?>
         {
-            ["ConnectionStrings:TravelAgentDb"] = "Server=ignored;Database=ignored",
+            ["ConnectionStrings:TravelAgentDb"] = FakeConnString,
         });
 
         Assert.IsType<MockAiPlannerService>(provider.GetRequiredService<IAiPlannerService>());
     }
 
     [Fact]
-    public void With_openai_settings_the_azure_planner_is_used()
+    public void With_ai_settings_the_openai_compatible_planner_is_used()
     {
         using var provider = BuildProvider(new Dictionary<string, string?>
         {
-            ["ConnectionStrings:TravelAgentDb"] = "Server=ignored;Database=ignored",
-            ["AzureOpenAI:Endpoint"] = "https://example.openai.azure.com/",
-            ["AzureOpenAI:ApiKey"] = "fake-key",
-            ["AzureOpenAI:Deployment"] = "planner",
+            ["ConnectionStrings:TravelAgentDb"] = FakeConnString,
+            ["Ai:Endpoint"] = "https://api.groq.com/openai/v1",
+            ["Ai:ApiKey"] = "fake-key",
+            ["Ai:Model"] = "llama-3.3-70b-versatile",
         });
 
         using var scope = provider.CreateScope();
-        Assert.IsType<AzureOpenAiPlannerService>(scope.ServiceProvider.GetRequiredService<IAiPlannerService>());
+        Assert.IsType<OpenAiCompatiblePlannerService>(scope.ServiceProvider.GetRequiredService<IAiPlannerService>());
     }
 
     [Fact]
@@ -63,7 +65,7 @@ public class DependencyInjectionTests
     {
         using var provider = BuildProvider(new Dictionary<string, string?>
         {
-            ["ConnectionStrings:TravelAgentDb"] = "Server=ignored;Database=ignored",
+            ["ConnectionStrings:TravelAgentDb"] = FakeConnString,
         });
 
         using var scope = provider.CreateScope();
@@ -78,20 +80,20 @@ public class DependencyInjectionTests
     }
 
     [Fact]
-    public void Design_time_factory_creates_a_sql_server_context()
+    public void Design_time_factory_creates_a_postgres_context()
     {
         using var context = new DesignTimeDbContextFactory().CreateDbContext([]);
-        Assert.Equal("Microsoft.EntityFrameworkCore.SqlServer", context.Database.ProviderName);
+        Assert.Equal("Npgsql.EntityFrameworkCore.PostgreSQL", context.Database.ProviderName);
     }
 
     [Theory]
-    [InlineData("", "key", "deploy", false)]
-    [InlineData("https://e", "", "deploy", false)]
+    [InlineData("", "key", "model", false)]
+    [InlineData("https://e", "", "model", false)]
     [InlineData("https://e", "key", "", false)]
-    [InlineData("https://e", "key", "deploy", true)]
-    public void AzureOpenAiOptions_requires_all_three_settings(string endpoint, string key, string deployment, bool expected)
+    [InlineData("https://e", "key", "model", true)]
+    public void AiOptions_requires_all_three_settings(string endpoint, string key, string model, bool expected)
     {
-        var options = new AzureOpenAiOptions { Endpoint = endpoint, ApiKey = key, Deployment = deployment };
+        var options = new AiOptions { Endpoint = endpoint, ApiKey = key, Model = model };
         Assert.Equal(expected, options.IsConfigured);
     }
 }

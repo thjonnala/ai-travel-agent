@@ -1,0 +1,34 @@
+# Render Blueprint — provisions the .NET API + a free PostgreSQL database.
+# In Render: New → Blueprint → connect this GitHub repo. Set the Ai__ApiKey
+# secret (Groq key) in the dashboard when prompted (it is sync:false below).
+databases:
+  - name: travelagent-db
+    plan: free
+    databaseName: travelagent
+    user: travelagent
+
+services:
+  - type: web
+    name: ai-travel-agent-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # Render hands out a postgres:// URL; the API normalizes it for Npgsql.
+      - key: ConnectionStrings__TravelAgentDb
+        fromDatabase:
+          name: travelagent-db
+          property: connectionString
+      - key: Ai__Endpoint
+        value: https://api.groq.com/openai/v1
+      - key: Ai__Model
+        value: llama-3.3-70b-versatile
+      - key: Ai__ApiKey
+        sync: false
+      - key: Cors__AllowedOrigins
+        value: https://aitravelagent.thiruapps.com
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production

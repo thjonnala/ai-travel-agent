@@ -9,11 +9,12 @@ using TravelAgent.Domain;
 namespace TravelAgent.Infrastructure.Ai;
 
 /// <summary>
-/// Azure OpenAI implementation of the planner. Uses structured outputs (strict
-/// JSON schema) and re-prompts once with the validation errors if the model
-/// still manages to return an invalid itinerary.
+/// Planner backed by any OpenAI-compatible chat API (Groq, OpenRouter, a
+/// self-hosted Ollama, …). Asks for JSON-object responses and relies on the
+/// embedded schema in the prompt plus server-side validation — re-prompting
+/// once with the validation errors if the model returns invalid output.
 /// </summary>
-public sealed class AzureOpenAiPlannerService(ChatClient chatClient, ILogger<AzureOpenAiPlannerService> logger) : IAiPlannerService
+public sealed class OpenAiCompatiblePlannerService(ChatClient chatClient, ILogger<OpenAiCompatiblePlannerService> logger) : IAiPlannerService
 {
     internal static readonly JsonSerializerOptions SerializerOptions = new()
     {
@@ -25,13 +26,9 @@ public sealed class AzureOpenAiPlannerService(ChatClient chatClient, ILogger<Azu
     public async Task<ItineraryDraft> GeneratePlanAsync(PlanningContext context, CancellationToken cancellationToken = default)
     {
         var messages = BuildMessages(context);
-        var options = new ChatCompletionOptions
-        {
-            ResponseFormat = ChatResponseFormat.CreateJsonSchemaFormat(
-                jsonSchemaFormatName: "itinerary",
-                jsonSchema: BinaryData.FromString(ItinerarySchema.Json),
-                jsonSchemaIsStrict: true),
-        };
+        // JSON-object mode is supported across providers (Groq/OpenRouter/Ollama);
+        // the exact shape is enforced by the schema in the prompt + ItineraryValidator.
+        var options = new ChatCompletionOptions { ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat() };
 
         var rawResponse = await CompleteAsync(messages, options, cancellationToken);
         var (draft, errors) = TryParse(rawResponse);
@@ -59,13 +56,19 @@ public sealed class AzureOpenAiPlannerService(ChatClient chatClient, ILogger<Azu
         }
         catch (ClientResultException ex)
         {
-            throw new AiPlannerException($"Azure OpenAI request failed (status {ex.Status}).", ex);
+            throw new AiPlannerException($"AI provider request failed (status {ex.Status}).", ex);
         }
     }
 
     private static List<ChatMessage> BuildMessages(PlanningContext context)
     {
-        var messages = new List<ChatMessage> { new SystemChatMessage(ItinerarySchema.BuildSystemPrompt(context)) };
+        var messages = new List<ChatMessage>
+        {
+            new SystemChatMessage(ItinerarySchema.BuildSystemPrompt(context)),
+            // With JSON-object mode the provider doesn't enforce a schema, so the
+            // exact JSON shape is described here for the model to follow.
+            new SystemChatMessage($"Return a single JSON object that conforms exactly to this JSON schema:\n{ItinerarySchema.Json}"),
+        };
 
         if (context.CurrentItinerary is { } current)
             messages.Add(new UserChatMessage(ItinerarySchema.BuildCurrentItineraryMessage(current, SerializerOptions)));
