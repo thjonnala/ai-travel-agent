@@ -21,3 +21,6 @@ Thumbs.db
 
 # Python
 __pycache__/
+
+# Frontend prod API URL is public config, not a secret — must be committed for CI builds.
+!frontend/.env.production
