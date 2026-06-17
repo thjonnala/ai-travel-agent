@@ -1,7 +1,7 @@
 name: Backend CI
 
-# Quality gate for the API. Render deploys the backend automatically from main
-# via its own GitHub integration (see render.yaml); this just runs the tests.
+# Quality gate for the API. The backend is deployed via the consolidated
+# thiru-apps-api (Azure) pipelines; this just runs the tests.
 on:
   push:
     branches: [main]

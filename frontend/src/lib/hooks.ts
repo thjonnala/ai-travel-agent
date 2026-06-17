@@ -5,14 +5,14 @@ import type { PagedResult, Preferences, TripDetail, TripSummary } from './types'
 export function useTrips() {
   return useQuery({
     queryKey: ['trips'],
-    queryFn: () => apiFetch<PagedResult<TripSummary>>('/api/trips?pageSize=50'),
+    queryFn: () => apiFetch<PagedResult<TripSummary>>('/api/sat/trips?pageSize=50'),
   })
 }
 
 export function useTrip(tripId: string | undefined) {
   return useQuery({
     queryKey: ['trips', tripId],
-    queryFn: () => apiFetch<TripDetail>(`/api/trips/${tripId}`),
+    queryFn: () => apiFetch<TripDetail>(`/api/sat/trips/${tripId}`),
     enabled: !!tripId,
   })
 }
@@ -22,7 +22,7 @@ export function usePlanTrip() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: ({ request, tripId }: { request: string; tripId?: string }) =>
-      apiFetch<TripDetail>('/api/trips/plan', {
+      apiFetch<TripDetail>('/api/sat/trips/plan', {
         method: 'POST',
         body: JSON.stringify({ request, tripId }),
       }),
@@ -36,7 +36,7 @@ export function usePlanTrip() {
 export function useDeleteTrip() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (tripId: string) => apiFetch<void>(`/api/trips/${tripId}`, { method: 'DELETE' }),
+    mutationFn: (tripId: string) => apiFetch<void>(`/api/sat/trips/${tripId}`, { method: 'DELETE' }),
     onSuccess: () => void queryClient.invalidateQueries({ queryKey: ['trips'] }),
   })
 }
@@ -45,7 +45,7 @@ export function useDuplicateTrip() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (tripId: string) =>
-      apiFetch<TripDetail>(`/api/trips/${tripId}/duplicate`, { method: 'POST' }),
+      apiFetch<TripDetail>(`/api/sat/trips/${tripId}/duplicate`, { method: 'POST' }),
     onSuccess: () => void queryClient.invalidateQueries({ queryKey: ['trips'] }),
   })
 }
@@ -53,7 +53,7 @@ export function useDuplicateTrip() {
 export function usePreferences() {
   return useQuery({
     queryKey: ['preferences'],
-    queryFn: () => apiFetch<Preferences>('/api/preferences'),
+    queryFn: () => apiFetch<Preferences>('/api/sat/preferences'),
   })
 }
 
@@ -61,7 +61,7 @@ export function useUpdatePreferences() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (preferences: Omit<Preferences, 'updatedAt'>) =>
-      apiFetch<Preferences>('/api/preferences', {
+      apiFetch<Preferences>('/api/sat/preferences', {
         method: 'PUT',
         body: JSON.stringify(preferences),
       }),

@@ -14,8 +14,8 @@ Describe a trip in natural language ("5 relaxed days in Lisbon in October, mid-r
 | API | .NET 10 controller-based Web API (clean architecture: Api → Application → Domain ← Infrastructure) |
 | Database | PostgreSQL via EF Core 10 (Npgsql), code-first migrations |
 | AI | OpenAI-compatible provider behind an `IAiPlannerService` abstraction — Groq (open models) by default; mock fallback when unconfigured |
-| Hosting | GitHub Pages (frontend) + Render (API as a Docker web service) + Render PostgreSQL |
-| CI/CD | GitHub Actions (Pages deploy + backend tests); Render auto-deploys the API from `main` |
+| Hosting | GitHub Pages (frontend) + consolidated `thiru-apps-api` (Azure App Service, under `/api/sat`) + Azure SQL |
+| CI/CD | GitHub Actions (Pages deploy + backend tests); API deploys via the `thiru-apps-infra` pipelines |
 
 Repo layout:
 
@@ -23,7 +23,6 @@ Repo layout:
 backend/   .NET solution (src/ = Api, Application, Domain, Infrastructure; tests/) + Dockerfile
 frontend/  React + Vite app (deployed to GitHub Pages)
 designs/   architecture & design diagrams
-render.yaml          Render blueprint (API web service + free PostgreSQL)
 .github/workflows/   Pages deploy + backend CI
 ```
 
@@ -70,17 +69,17 @@ npm run dev   # http://localhost:5173, /api/* proxied to the backend
 
 ## Configuration
 
-No secrets live in source control. Local dev uses .NET user secrets; on Render
-they are environment variables (the Groq key is set in the dashboard).
+No secrets live in source control. Local dev uses .NET user secrets; in the cloud
+they are app settings / Key Vault on the consolidated `thiru-apps-api`.
 
 | Setting | Where | Purpose |
 |---|---|---|
-| `ConnectionStrings__TravelAgentDb` | user secrets / Render env | PostgreSQL connection string (accepts Npgsql key-value **or** a `postgres://` URL) |
-| `Ai__Endpoint` | appsettings / Render env | OpenAI-compatible base URL (default `https://api.groq.com/openai/v1`) |
-| `Ai__Model` | appsettings / Render env | Model id (default `llama-3.3-70b-versatile`) |
-| `Ai__ApiKey` | user secrets / Render env | Provider key — leave empty to use the mock planner |
-| `Cors__AllowedOrigins` | Render env | Comma-separated allowed frontend origins |
-| `VITE_API_BASE_URL` | `frontend/.env.local` / GitHub repo variable | Absolute API origin for the deployed SPA |
+| `ConnectionStrings__TravelAgentDb` | user secrets / consolidated API app settings | DB connection string (Npgsql locally; the shared Azure SQL `thiru-apps-db` in the cloud) |
+| `Ai__Endpoint` | appsettings / API app settings | OpenAI-compatible base URL (default `https://api.groq.com/openai/v1`) |
+| `Ai__Model` | appsettings / API app settings | Model id (default `llama-3.3-70b-versatile`) |
+| `Ai__ApiKey` | user secrets / API app settings | Provider key — leave empty to use the mock planner |
+| `Cors__AllowedOrigins` | API app settings | Comma-separated allowed frontend origins |
+| `VITE_API_BASE_URL` | `frontend/.env.production` | Absolute API origin for the deployed SPA (`https://thiru-apps-api.azurewebsites.net`; routes under `/api/sat`) |
 
 ## Database migrations
 
@@ -102,11 +101,12 @@ dotnet test backend/TravelAgent.slnx   # 51 tests; integration tests use SQLite 
 
 1. Push to `main`; the workflow builds the SPA and publishes it to Pages.
 2. In repo **Settings → Pages**, set Source = "GitHub Actions".
-3. Set repo **variable** `VITE_API_BASE_URL` to the Render API origin so the SPA calls the right backend.
+3. The API origin is set in [`frontend/.env.production`](frontend/.env.production) (`https://thiru-apps-api.azurewebsites.net`; routes resolve under `/api/sat`) — no Actions variable needed.
 4. Custom domain: `frontend/public/CNAME` already contains `aitravelagent.thiruapps.com`. Point a DNS `CNAME` record for `aitravelagent` at `thjonnala.github.io`, then enable "Enforce HTTPS" in Settings → Pages (GitHub provisions the certificate automatically).
 
-**Backend + database → Render** (`render.yaml` blueprint):
+**Backend + database → consolidated thiru-apps-api (Azure):**
 
-1. In Render: **New → Blueprint**, connect this GitHub repo. It creates the Docker web service and a free PostgreSQL database, wiring the connection string automatically.
-2. Set the `Ai__ApiKey` secret (your Groq key) in the service's Environment settings.
-3. Migrations apply on startup; once live, the API serves at `https://ai-travel-agent-api.onrender.com` (use that for `VITE_API_BASE_URL` above and confirm it's in `Cors__AllowedOrigins`).
+The backend is consolidated into the shared **`thiru-apps-api`** Azure App Service, served under **`/api/sat`**, with its data in the shared **Azure SQL** database (`thiru-apps-db`). **Render is no longer used** (the old `render.yaml` has been removed).
+
+1. Infrastructure (App Service + Azure SQL + Key Vault) is provisioned from the [`thiru-apps-infra`](https://dev.azure.com/thjonnala/thiru-apps-infra) repo (Bicep + pipelines).
+2. The Groq key (`Ai__ApiKey`) and `Cors__AllowedOrigins` (must include `https://aitravelagent.thiruapps.com`) are configured on the consolidated API.
